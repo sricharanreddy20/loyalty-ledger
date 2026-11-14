@@ -12,7 +12,7 @@ from backend.app.validation import CHECKS, run_validation
 from generator.config import DEFAULT_SEED, SCALES
 from generator.export import export
 from generator.generate import generate
-from generator.load import database_url, load
+from generator.load import load
 
 PER_TYPE = SCALES["starter"].anomalies_per_type
 STRUCTURAL = {"Primary keys", "Foreign keys", "Allowed values", "Duplicates"}
@@ -85,13 +85,13 @@ def test_unlabelled_corruption_is_a_fail_and_a_false_positive(test_db_url):
     assert result["false_positives"][0]["record_id"] == loy_id
 
 
-def test_clean_baseline_passes_everything_and_flags_nothing(tmp_path):
-    """The baseline before anomaly injection, loaded with an empty ground truth into its own database."""
-    base = database_url()
-    with psycopg.connect(base, autocommit=True) as admin:
+def test_clean_baseline_passes_everything_and_flags_nothing(test_db_url, tmp_path):
+    """The baseline before anomaly injection, loaded with an empty ground truth into its own database.
+    Depends on test_db_url so it is skipped, like the other API tests, when there is no database."""
+    with psycopg.connect(test_db_url, autocommit=True) as admin:
         admin.execute("DROP DATABASE IF EXISTS loyalty_test_clean WITH (FORCE)")
         admin.execute("CREATE DATABASE loyalty_test_clean")
-    url = make_conninfo(base, dbname="loyalty_test_clean")
+    url = make_conninfo(test_db_url, dbname="loyalty_test_clean")
     export(generate(DEFAULT_SEED, "starter"), [], tmp_path, DEFAULT_SEED, "starter")
     load(tmp_path, url)
     with psycopg.connect(url, row_factory=dict_row) as conn:

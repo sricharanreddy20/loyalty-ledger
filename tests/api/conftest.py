@@ -1,6 +1,7 @@
 """API tests run against a separate database, `loyalty_test`, on the same PostgreSQL server.
 It is recreated and loaded with the starter export once per session, so the development
-database is never touched. All API tests are skipped if PostgreSQL is not reachable."""
+database is never touched. Every test that needs the database depends on `test_db_url`, so
+all of them are skipped when DATABASE_URL is not set or PostgreSQL is not reachable."""
 import os
 
 import psycopg
@@ -19,7 +20,10 @@ WRITE_DAY = "2026-12-31"          # every API write in the tests happens late on
 
 @pytest.fixture(scope="session")
 def test_db_url(tmp_path_factory):
-    base = database_url()
+    try:
+        base = database_url()
+    except SystemExit:                 # no DATABASE_URL in the environment and no .env file
+        pytest.skip("DATABASE_URL is not set (copy .env.example to .env)")
     try:
         admin = psycopg.connect(base, autocommit=True, connect_timeout=3)
     except psycopg.OperationalError:
