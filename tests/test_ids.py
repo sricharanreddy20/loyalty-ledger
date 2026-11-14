@@ -11,6 +11,8 @@ def test_exact_formats():
     assert ids.pts_id(1) == "PTS-2026-00000001"
     assert ids.rdm_id(1) == "RDM-2026-000001"
     assert ids.exp_id(12) == "EXP-2026-000012"
+    assert ids.ret_id(1) == "RET-2026-000001"
+    assert ids.tch_id(1) == "TCH-2026-000001"
     assert ids.tier_id("BRONZE") == "TIER-BRONZE"
     assert ids.rule_id(1) == "RULE-0001"
     assert ids.reward_id(1) == "RWD-0001"
@@ -55,6 +57,8 @@ def test_patterns_match_formatter_output():
         "pts": ids.pts_id(42),
         "rdm": ids.rdm_id(42),
         "exp": ids.exp_id(1),
+        "ret": ids.ret_id(7),
+        "tch": ids.tch_id(7),
         "tier": ids.tier_id("PLATINUM"),
         "rule": ids.rule_id(42),
         "reward": ids.reward_id(42),

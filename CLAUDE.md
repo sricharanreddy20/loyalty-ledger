@@ -59,7 +59,7 @@ Every write runs in a single DB transaction. Errors return clear JSON (400/404/4
 - `--scale starter` (~5%) and `--scale full` use the same code paths.
 
 ## ID formats (exact)
-CUST-000001 (customer) · LOY-<customer-id> (e.g. LOY-CUST-000001) · ORD-2026-000001 · line id ORD-2026-000001-01 · PTS-2026-00000001 · RDM-2026-000001 · EXP-2026-000001 · TIER-BRONZE etc · RULE-0001 · RWD-0001.
+CUST-000001 (customer) · LOY-<customer-id> (e.g. LOY-CUST-000001) · ORD-2026-000001 · line id ORD-2026-000001-01 · PTS-2026-00000001 · RDM-2026-000001 · EXP-2026-000001 · RET-2026-000001 (return) · TCH-2026-000001 (tier change) · TIER-BRONZE etc · RULE-0001 · RWD-0001.
 Zero-padded, immutable, identical across all files.
 
 ## Business rules (base currency INR)
@@ -143,4 +143,6 @@ PK uniqueness, FK integrity, allowed enums, date order, arithmetic reconciliatio
 CHECKPOINT: by ~17:00 the DB is loaded and at least the read API works. If behind, cut the detector first, then frontend polish.
 
 ## Current status
-Step 0 done: repo layout, .gitignore, .env.example, docker-compose (db only, host port 5433 because a local Postgres uses 5432), core/config.py (tiers, rules, AS_OF_DATE), generator/config.py (seed, scales), core/ids.py + tests/test_ids.py (14 passing). Local venv uses the installed python3 (3.14); backend image will be python:3.12-slim. Next: Step 1. (Update after each completed step.)
+- Step 0 done: layout, .gitignore, .env.example, docker-compose (db only, host port 5433 because a local Postgres uses 5432), core/config.py, generator/config.py, core/ids.py + tests. Local venv uses the installed python3 (3.14); backend image will be python:3.12-slim.
+- Step 1 done: db/schema.sql (13 tables + eval.ground_truth, structural constraints only; business rules left to validation), lot_status(as_of date DEFAULT '2026-12-31') SQL function, db/tests/smoke_test.sql (rolled-back, passing), docs/erd.md, docs/business_rules.md. Added RET/TCH IDs. Compose mounts only db/schema.sql into initdb (recreate volume with `docker compose down -v` after schema changes, or re-run schema.sql, which is re-runnable).
+- Next: Step 2 (core rule functions).

@@ -48,6 +48,14 @@ def exp_id(n: int) -> str:
     return f"EXP-{YEAR}-{_pad(n, 6)}"
 
 
+def ret_id(n: int) -> str:
+    return f"RET-{YEAR}-{_pad(n, 6)}"
+
+
+def tch_id(n: int) -> str:
+    return f"TCH-{YEAR}-{_pad(n, 6)}"
+
+
 def tier_id(code: str) -> str:
     if code not in TIER_CODES:
         raise ValueError(f"unknown tier code: {code!r}")
@@ -72,6 +80,8 @@ PATTERNS = {
     "pts": re.compile(rf"PTS-{YEAR}-\d{{8}}"),
     "rdm": re.compile(rf"RDM-{YEAR}-\d{{6}}"),
     "exp": re.compile(rf"EXP-{YEAR}-\d{{6}}"),
+    "ret": re.compile(rf"RET-{YEAR}-\d{{6}}"),
+    "tch": re.compile(rf"TCH-{YEAR}-\d{{6}}"),
     "tier": re.compile("TIER-(" + "|".join(TIER_CODES) + ")"),
     "rule": re.compile(r"RULE-\d{4}"),
     "reward": re.compile(r"RWD-\d{4}"),

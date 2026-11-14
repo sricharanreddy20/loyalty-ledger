@@ -7,8 +7,8 @@ services:
       - "${DB_PORT:-5433}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-      # Scripts in db/ (e.g. schema.sql, Step 1) run once, on first start of an empty volume.
-      - ./db:/docker-entrypoint-initdb.d:ro
+      # schema.sql runs once, on first start of an empty volume.
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
