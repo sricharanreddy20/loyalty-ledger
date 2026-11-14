@@ -35,7 +35,8 @@ CATEGORIES = ("ELECTRONICS", "APPAREL", "HOME", "BEAUTY", "GROCERY", "SPORTS", "
 EXCLUDED_CATEGORIES = ("GIFT_CARD",)
 
 LOT_EXPIRY_DAYS = 180
-RETURN_WINDOW_DAYS = 30   # also the pending period before points become available
+RETURN_WINDOW_DAYS = 30   # a return is allowed up to and including day 30 after the order
+AVAILABLE_AFTER_DAYS = RETURN_WINDOW_DAYS + 1   # lot becomes available on day 31, after the window closes
 
 # All rules are effective for the whole of 2026 (effective_to = None means open-ended).
 RULES_EFFECTIVE_FROM = DATASET_START

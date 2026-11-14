@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 from decimal import ROUND_FLOOR, ROUND_HALF_UP, Decimal
 
-from core.config import EXCLUDED_CATEGORIES, LOT_EXPIRY_DAYS, RETURN_WINDOW_DAYS, TIERS, Tier
+from core.config import AVAILABLE_AFTER_DAYS, EXCLUDED_CATEGORIES, LOT_EXPIRY_DAYS, TIERS, Tier
 
 CENT = Decimal("0.01")
 
@@ -62,9 +62,20 @@ def points_for(eligible, rate) -> int:
 
 
 def lot_dates(earned_on: date) -> tuple[date, date]:
-    """(available_from, expires_at) for a lot earned on this date."""
-    return (earned_on + timedelta(days=RETURN_WINDOW_DAYS),
+    """(available_from, expires_at) for a lot earned on this date.
+
+    Available from day 31: the day after the last day a return is allowed, so a
+    redemption can never consume points that a later return would reverse.
+    """
+    return (earned_on + timedelta(days=AVAILABLE_AFTER_DAYS),
             earned_on + timedelta(days=LOT_EXPIRY_DAYS))
+
+
+def remaining_eligible_net(original_eligible_net, qty: int, returned_qty_total: int) -> Decimal:
+    """Eligible net still kept after returning some units; the discount is split in proportion."""
+    if not 0 <= returned_qty_total <= qty:
+        raise ValueError(f"returned qty {returned_qty_total} outside 0..{qty}")
+    return _money(_money(original_eligible_net) * (qty - returned_qty_total) / qty)
 
 
 def reversal_points(original_points: int, original_eligible_net, qty: int,
@@ -77,8 +88,7 @@ def reversal_points(original_points: int, original_eligible_net, qty: int,
     """
     if not 1 <= returned_qty_total <= qty:
         raise ValueError(f"returned qty {returned_qty_total} outside 1..{qty}")
-    remaining_net = _money(_money(original_eligible_net) * (qty - returned_qty_total) / qty)
-    still_earned = points_for(remaining_net, rate)
+    still_earned = points_for(remaining_eligible_net(original_eligible_net, qty, returned_qty_total), rate)
     to_reverse = original_points - still_earned - already_reversed
     if to_reverse < 0:
         raise ValueError("already_reversed is larger than this return allows")

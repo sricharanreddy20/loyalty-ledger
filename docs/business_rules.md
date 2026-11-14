@@ -20,11 +20,11 @@ The configurable values are in [`core/config.py`](../core/config.py) and are loa
 
 **Lots.**
 - Every accrual is a lot.
-- Its points are pending for 30 days (the return window), then become available.
+- Its points are pending through day 30 (the last day a return is allowed) and become available on day 31. A redemption therefore can never use points that a later return would reverse.
 - A lot expires 180 days after it was earned.
 
 **Returns.**
-- Full or partial returns are allowed within 30 days of the order. Each return is a `line_return` record.
+- Full or partial returns are allowed up to and including day 30 after the order. Each return is a `line_return` record.
 - Points to reverse = original points − `floor(remaining eligible_net × original rate / 100)` − points already reversed.
 - Each reversal references the original accrual.
 - Points are still pending at return time, so a return never clashes with a redemption.
@@ -42,7 +42,7 @@ The configurable values are in [`core/config.py`](../core/config.py) and are loa
 
 **Tier progression.**
 - Qualifying spend = eligible net spend − returned eligible net. Gross spend is not used.
-- Crossing a threshold writes a `tier_change` record. The new rate applies from the next day.
+- Crossing a threshold (checked at the end of each day, after that day's returns) writes a `tier_change` record. The new rate applies from the next day. An upgrade earned on 31 Dec is recorded with an effective date of 1 Jan 2027.
 - There are no downgrades in 2026.
 
 **Ledger.**

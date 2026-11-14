@@ -5,7 +5,7 @@ import pytest
 
 from core.rules import (
     InsufficientPoints, Lot, eligible_net, fifo_consume, lot_dates, lots_to_expire,
-    points_for, reversal_points, tier_for,
+    points_for, remaining_eligible_net, reversal_points, tier_for,
 )
 
 
@@ -62,8 +62,21 @@ def test_points_for_rejects_bad_input():
         points_for(D("100"), 1.25)       # floats are not allowed
 
 
-def test_lot_dates():
-    assert lot_dates(date(2026, 1, 10)) == (date(2026, 2, 9), date(2026, 7, 9))
+def test_lot_dates_available_the_day_after_the_return_window():
+    # Earned 10 Jan: a return is still allowed on 9 Feb (day 30), so points become available on 10 Feb (day 31).
+    available_from, expires_at = lot_dates(date(2026, 1, 10))
+    assert available_from == date(2026, 2, 10)
+    assert (available_from - date(2026, 1, 10)).days == 31
+    assert expires_at == date(2026, 7, 9)
+
+
+def test_remaining_eligible_net_splits_discount_in_proportion():
+    assert remaining_eligible_net(D("9000.00"), 4, 0) == D("9000.00")
+    assert remaining_eligible_net(D("9000.00"), 4, 1) == D("6750.00")
+    assert remaining_eligible_net(D("100.00"), 3, 1) == D("66.67")     # rounded half-up
+    assert remaining_eligible_net(D("9000.00"), 4, 4) == D("0.00")
+    with pytest.raises(ValueError):
+        remaining_eligible_net(D("9000.00"), 4, 5)
 
 
 # ------------------------------------------------------------ reversal_points

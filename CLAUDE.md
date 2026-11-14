@@ -75,18 +75,18 @@ Zero-padded, immutable, identical across all files.
 - Earn rate per tier (above).
 - Category exclusions: gift cards are not eligible; shipping and tax are never eligible.
 - Point lot expiry: 180 days after the accrual date.
-- Return window: 30 days. Points stay PENDING for 30 days, then become AVAILABLE.
+- Return window: 30 days (a return on day 30 after the order is allowed). Points stay PENDING through day 30 and become AVAILABLE on day 31 (earned + 31 days), so no redemption can consume points a return may still reverse.
 
 ### Eligible net spend and accrual
 - Per order line: eligible net = (unit_price × qty − discount), only for eligible categories.
 - Accrual is per order line: points = floor(eligible_net × rate / 100), using the tier at the order date.
-- Each accrual is a "lot" with earned_at, available_from (+30 days), expires_at (+180 days).
+- Each accrual is a "lot" with earned_at, available_from (+31 days), expires_at (+180 days).
 
 ### Returns and reversals
 - Full refund or partial return (some qty of a line), only within 30 days.
 - Reversal points = original_points − floor(remaining_eligible_net × rate / 100), using the ORIGINAL rate.
 - Every REVERSAL entry references the original ACCRUAL `pts_id` (`reverses_pts_id`).
-- Because points are pending for 30 days, returns never conflict with redemptions.
+- Because points are pending until the day after the return window closes, returns never conflict with redemptions.
 
 ### Redemptions
 - Reward catalogue (Reward table) with points_cost.
@@ -146,4 +146,5 @@ CHECKPOINT: by ~17:00 the DB is loaded and at least the read API works. If behin
 - Step 0 done: layout, .gitignore, .env.example, docker-compose (db only, host port 5433 because a local Postgres uses 5432), core/config.py, generator/config.py, core/ids.py + tests. Local venv uses the installed python3 (3.14); backend image will be python:3.12-slim.
 - Step 1 done: db/schema.sql (13 tables + eval.ground_truth, structural constraints only; business rules left to validation), lot_status(as_of date DEFAULT '2026-12-31') SQL function, db/tests/smoke_test.sql (rolled-back, passing), docs/erd.md, docs/business_rules.md. Added RET/TCH IDs. Compose mounts only db/schema.sql into initdb (recreate volume with `docker compose down -v` after schema changes, or re-run schema.sql, which is re-runnable).
 - Step 2 done: core/rules.py (eligible_net, points_for, lot_dates, reversal_points with cumulative partial returns and proportional discount split, fifo_consume + InsufficientPoints, lots_to_expire, tier_for), tests/test_rules.py. 72 tests passing. Floats rejected for money/rates.
-- Next: Step 3 (generator, starter scale).
+- Step 3 done: generator (master.py, plan.py, simulate.py, generate.py, `python -m generator --scale starter`). One date-ordered pass: expiry batch -> tier upgrades due -> events by (ts, order<return<redemption, key) -> end-of-day tier check. Lots available from earned + 31 days (day after the return window). RDM ids issued at processing time; 80% of requests with nothing affordable are dropped; concurrent pairs from the top 20% most active accounts. Upgrade earned on 31 Dec is effective 2027-01-01. tests/test_generator.py replays the ledger to prove no lot ever goes negative. Starter: 15,107 ledger rows (~302k projected at full), 0.24s. 104 tests passing.
+- Next: Step 4 (anomalies, exports, load, manifest, reproducibility).

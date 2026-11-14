@@ -32,7 +32,7 @@ INSERT INTO expiry_batch VALUES ('EXP-2026-000008', '2026-08-01', '2026-08-01 00
 
 -- accrual 100 (lot), reversal -25 (1 of 4 returned), redemption -30, expiry of the rest -45
 INSERT INTO points_transaction (pts_id, loy_id, txn_type, points, txn_ts, line_id, eligible_net, earn_rate, available_from, expires_at)
-    VALUES ('PTS-2026-00000001', 'LOY-CUST-000001', 'ACCRUAL', 100, '2026-01-10 11:00', 'ORD-2026-000001-01', 10000, 1, '2026-02-09', '2026-07-09');
+    VALUES ('PTS-2026-00000001', 'LOY-CUST-000001', 'ACCRUAL', 100, '2026-01-10 11:00', 'ORD-2026-000001-01', 10000, 1, '2026-02-10', '2026-07-09');
 INSERT INTO points_transaction (pts_id, loy_id, txn_type, points, txn_ts, return_id, reverses_pts_id)
     VALUES ('PTS-2026-00000002', 'LOY-CUST-000001', 'REVERSAL', -25, '2026-01-20 10:00', 'RET-2026-000001', 'PTS-2026-00000001');
 INSERT INTO points_transaction (pts_id, loy_id, txn_type, points, txn_ts, rdm_id)
@@ -100,10 +100,10 @@ SELECT pg_temp.expect_reject('REVERSAL pointing at missing accrual',
        VALUES ('PTS-2026-00000009', 'LOY-CUST-000001', 'REVERSAL', -5, '2026-01-21', 'RET-2026-000001', 'PTS-2026-99999999')$q$);
 SELECT pg_temp.expect_reject('ACCRUAL without line',
     $q$INSERT INTO points_transaction (pts_id, loy_id, txn_type, points, txn_ts, eligible_net, earn_rate, available_from, expires_at)
-       VALUES ('PTS-2026-00000009', 'LOY-CUST-000001', 'ACCRUAL', 5, '2026-01-10', 500, 1, '2026-02-09', '2026-07-09')$q$);
+       VALUES ('PTS-2026-00000009', 'LOY-CUST-000001', 'ACCRUAL', 5, '2026-01-10', 500, 1, '2026-02-10', '2026-07-09')$q$);
 SELECT pg_temp.expect_reject('second ACCRUAL for same line',
     $q$INSERT INTO points_transaction (pts_id, loy_id, txn_type, points, txn_ts, line_id, eligible_net, earn_rate, available_from, expires_at)
-       VALUES ('PTS-2026-00000009', 'LOY-CUST-000001', 'ACCRUAL', 5, '2026-01-10', 'ORD-2026-000001-01', 500, 1, '2026-02-09', '2026-07-09')$q$);
+       VALUES ('PTS-2026-00000009', 'LOY-CUST-000001', 'ACCRUAL', 5, '2026-01-10', 'ORD-2026-000001-01', 500, 1, '2026-02-10', '2026-07-09')$q$);
 SELECT pg_temp.expect_reject('EXPIRY without lot reference',
     $q$INSERT INTO points_transaction (pts_id, loy_id, txn_type, points, txn_ts, exp_id)
        VALUES ('PTS-2026-00000009', 'LOY-CUST-000001', 'EXPIRY', -5, '2026-08-01', 'EXP-2026-000008')$q$);
