@@ -69,6 +69,20 @@ DETECTORS = {
         WHERE COALESCE(q.peak, 0) < nt.min_qualifying_spend AND COALESCE(g.gross, 0) >= nt.min_qualifying_spend""",
 }
 
+# Used only by score() and validation, never by detect(): each labelled record with its account.
+GROUND_TRUTH = """
+SELECT g.record_id, g.entity, g.issue_type, g.description, g.rule_violated,
+       COALESCE(a.loy_id, d.loy_id, p.loy_id, t.loy_id, o.loy_id) AS loy_id
+FROM eval.ground_truth g
+LEFT JOIN loyalty_account a ON g.entity = 'loyalty_account' AND a.loy_id = g.record_id
+LEFT JOIN redemption d ON g.entity = 'redemption' AND d.rdm_id = g.record_id
+LEFT JOIN points_transaction p ON g.entity = 'points_transaction' AND p.pts_id = g.record_id
+LEFT JOIN tier_change t ON g.entity = 'tier_change' AND t.tier_change_id = g.record_id
+LEFT JOIN line_return r ON g.entity = 'line_return' AND r.return_id = g.record_id
+LEFT JOIN order_line l ON l.line_id = r.line_id
+LEFT JOIN orders o ON o.ord_id = l.ord_id
+ORDER BY g.issue_type, g.record_id"""
+
 
 def detect(conn) -> list[dict]:
     """Run every detector. Returns rows {issue_type, record_id, loy_id, reason}, sorted."""
@@ -95,8 +109,7 @@ def _metrics(tp: int, fp: int, fn: int) -> dict:
 
 def score(conn, flagged: list[dict]) -> dict:
     """Compare detections with eval.ground_truth: per-type and overall (micro) metrics."""
-    truth = conn.execute("""SELECT record_id, entity, issue_type, description, rule_violated
-                            FROM eval.ground_truth ORDER BY issue_type, record_id""").fetchall()
+    truth = conn.execute(GROUND_TRUTH).fetchall()
     per_type, false_pos, false_neg = [], [], []
     totals = {"tp": 0, "fp": 0, "fn": 0}
     for issue_type in ISSUE_TYPES:

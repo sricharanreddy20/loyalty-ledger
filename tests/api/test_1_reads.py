@@ -59,3 +59,13 @@ def test_unknown_things_are_json_404s(client):
         response = client.get(path)
         assert response.status_code == 404
         assert response.json()["error"] == "NOT_FOUND"
+
+
+def test_stats_totals_and_tier_mix(client, sql):
+    stats = client.get("/stats").json()
+    assert stats["customers"] == sql("SELECT count(*) AS n FROM customer")[0]["n"]
+    assert stats["ledger_rows"] == sql("SELECT count(*) AS n FROM points_transaction")[0]["n"]
+    assert stats["points_outstanding"] == sql("SELECT SUM(points) AS s FROM points_transaction")[0]["s"]
+    assert [t["tier_id"] for t in stats["tier_mix"]] == ["TIER-BRONZE", "TIER-SILVER", "TIER-GOLD", "TIER-PLATINUM"]
+    assert sum(t["accounts"] for t in stats["tier_mix"]) == stats["accounts"]
+    assert abs(sum(t["share"] for t in stats["tier_mix"]) - 1) < 0.001

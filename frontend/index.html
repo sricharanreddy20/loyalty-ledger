@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loyalty Ledger</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <strong class="brand">Loyalty Ledger</strong>
+    <nav>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#accounts">Accounts</a>
+      <a href="#anomalies">Anomalies</a>
+    </nav>
+    <span id="api-status" class="pill">API …</span>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- ------------------------------------------------------------ dashboard -->
+  <section id="dashboard">
+    <h2>Dashboard</h2>
+    <div id="stats" class="cards"></div>
+
+    <div class="grid2">
+      <div class="panel">
+        <h3>Tier mix</h3>
+        <div id="tier-mix"></div>
+      </div>
+      <div class="panel">
+        <h3>Anomalies (ground truth vs detector)</h3>
+        <div id="anomaly-counts"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Validation</h3>
+      <div id="validation-totals" class="cards small"></div>
+      <div id="validation-table"></div>
+    </div>
+    <p class="note">API writes below change the development database. Reset it with
+      <code>python -m generator --scale starter --load</code>.</p>
+  </section>
+
+  <!-- ------------------------------------------------------------ accounts -->
+  <section id="accounts">
+    <h2>Account lookup</h2>
+    <form id="search-form" class="row">
+      <input id="search" type="search" placeholder="Account id, name or email" aria-label="Search accounts">
+      <select id="tier-filter" aria-label="Tier">
+        <option value="">All tiers</option>
+      </select>
+      <button type="submit">Search</button>
+    </form>
+    <div id="search-results"></div>
+
+    <div id="account" hidden>
+      <div class="panel">
+        <h3 id="account-title"></h3>
+        <div id="account-cards" class="cards small"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Actions</h3>
+        <p class="note">Write times must be on or after the account's latest event and no later than
+          31 Dec 2026 23:59:59.</p>
+        <div class="actions">
+          <form id="redeem-form" class="action">
+            <h4>Redeem a reward</h4>
+            <label>Reward <select id="redeem-reward"></select></label>
+            <label>Requested at <input id="redeem-ts" type="datetime-local" value="2026-12-31T23:00"></label>
+            <button type="submit">Redeem</button>
+          </form>
+          <form id="return-form" class="action">
+            <h4>Return an order line</h4>
+            <label>Line <select id="return-line"></select></label>
+            <label>Quantity <input id="return-qty" type="number" min="1" value="1"></label>
+            <label>Returned at <input id="return-ts" type="datetime-local" value="2026-12-31T23:00"></label>
+            <button type="submit">Return</button>
+          </form>
+          <form id="expiry-form" class="action">
+            <h4>Run an expiry batch</h4>
+            <label>Run date <select id="expiry-date"></select></label>
+            <button type="submit">Run batch</button>
+            <p class="note">Runs for all accounts. 2027-01-01 closes the 2026 write window.</p>
+          </form>
+        </div>
+        <div id="action-result" aria-live="polite"></div>
+      </div>
+
+      <div class="panel">
+        <h3>Lots</h3>
+        <div id="lots"></div>
+      </div>
+      <div class="panel">
+        <h3>Ledger</h3>
+        <div id="ledger"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ anomalies -->
+  <section id="anomalies">
+    <h2>Anomalies</h2>
+    <div class="panel">
+      <h3>Detector metrics per issue type</h3>
+      <div id="metrics"></div>
+    </div>
+    <div class="panel">
+      <h3>Records</h3>
+      <p class="note">TP = labelled and flagged, FP = flagged but not labelled, FN = labelled but missed.
+        Click a row to open its account.</p>
+      <div id="records"></div>
+    </div>
+  </section>
+</main>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

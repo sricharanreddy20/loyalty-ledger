@@ -244,6 +244,7 @@ class GroundTruth(BaseModel):
     issue_type: str
     description: str
     rule_violated: str
+    loy_id: str | None           # the account the labelled record belongs to
 
 
 class AnomalyReport(BaseModel):
@@ -254,3 +255,24 @@ class AnomalyReport(BaseModel):
     false_negatives: list[GroundTruth]
     flagged: list[Flagged]
     ground_truth: list[GroundTruth]
+
+
+# ---------------------------------------------------------------- dashboard
+
+class TierCount(BaseModel):
+    tier_id: str
+    code: str
+    accounts: int
+    share: float                 # fraction of all accounts, 0..1
+
+
+class Stats(BaseModel):
+    customers: int
+    accounts: int
+    orders: int
+    order_lines: int
+    ledger_rows: int
+    points_outstanding: int      # sum of the whole ledger (the source of truth)
+    redemptions_approved: int
+    redemptions_rejected: int
+    tier_mix: list[TierCount]

@@ -1,4 +1,5 @@
-# db (PostgreSQL 16) and backend (FastAPI). The frontend is added in Step 7.
+# db (PostgreSQL 16), backend (FastAPI) and frontend (static page on nginx).
+# Open http://localhost:8080 for the page and http://localhost:8000/docs for the API.
 # Data is loaded from the host: python -m generator --scale starter --load
 services:
   db:
@@ -34,6 +35,16 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  frontend:
+    image: nginx:1.27-alpine
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    volumes:
+      # static files only; the page calls the backend from the browser (config.js)
+      - ./frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
 
 volumes:
   pgdata:

@@ -8,7 +8,7 @@ from backend.app.detector import detect, score
 from backend.app.evaluate import snapshot
 from backend.app.errors import not_found
 from backend.app.models import (
-    AccountDetail, AccountSummary, AnomalyReport, Health, LedgerEntry, LotOut, RewardOut, RuleOut, TierOut, ValidationSummary,
+    AccountDetail, AccountSummary, AnomalyReport, Health, LedgerEntry, LotOut, RewardOut, RuleOut, Stats, TierOut, ValidationSummary,
 )
 from backend.app.queries import qualifying_spend
 from backend.app.validation import run_validation
@@ -27,6 +27,27 @@ def health():
     with transaction() as conn:
         conn.execute("SELECT 1")
     return {"status": "ok", "database": "ok"}
+
+
+@router.get("/stats", response_model=Stats, tags=["reference"])
+def get_stats():
+    """Dashboard totals and the current tier mix."""
+    with transaction() as conn:
+        totals = conn.execute("""
+            SELECT (SELECT count(*) FROM customer) AS customers,
+                   (SELECT count(*) FROM loyalty_account) AS accounts,
+                   (SELECT count(*) FROM orders) AS orders,
+                   (SELECT count(*) FROM order_line) AS order_lines,
+                   (SELECT count(*) FROM points_transaction) AS ledger_rows,
+                   (SELECT COALESCE(SUM(points), 0) FROM points_transaction) AS points_outstanding,
+                   (SELECT count(*) FROM redemption WHERE status = 'APPROVED') AS redemptions_approved,
+                   (SELECT count(*) FROM redemption WHERE status = 'REJECTED') AS redemptions_rejected""").fetchone()
+        tiers = conn.execute("""
+            SELECT t.tier_id, t.code, count(a.loy_id) AS accounts
+            FROM tier t LEFT JOIN loyalty_account a USING (tier_id)
+            GROUP BY t.tier_id, t.code, t.rank ORDER BY t.rank""").fetchall()
+    total = totals["accounts"] or 1
+    return {**totals, "tier_mix": [{**t, "share": round(t["accounts"] / total, 4)} for t in tiers]}
 
 
 @router.get("/accounts", response_model=list[AccountSummary], tags=["accounts"])

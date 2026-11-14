@@ -59,6 +59,7 @@ def test_detector_finds_every_label_and_nothing_else(report):
     assert report["overall"]["tp"] == PER_TYPE * len(ISSUE_TYPES)
     assert report["false_positives"] == report["false_negatives"] == []
     assert all(f["reason"] for f in report["flagged"])
+    assert all(g["loy_id"] for g in report["ground_truth"])       # every label links to its account
 
 
 def test_detector_never_reads_ground_truth():

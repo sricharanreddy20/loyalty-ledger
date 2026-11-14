@@ -10,7 +10,7 @@ used afterwards, to say whether the violations were expected.
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 
-from backend.app.detector import DETECTORS
+from backend.app.detector import DETECTORS, GROUND_TRUTH
 from backend.app.sql_rules import LINES, RETURNS, SPEND, kept, tier_in_effect
 from core import ids
 from core.config import CATEGORIES
@@ -292,26 +292,12 @@ ACCEPTANCE = [
 
 CHECKS = STRUCTURAL + DATES + ARITHMETIC + LIFECYCLE + DUPLICATES + ACCEPTANCE
 
-# Map each labelled record to its account (used only to say whether a violation was expected).
-ANOMALY_ACCOUNTS = """
-SELECT g.issue_type,
-       COALESCE(a.loy_id, d.loy_id, p.loy_id, t.loy_id, o.loy_id) AS loy_id
-FROM eval.ground_truth g
-LEFT JOIN loyalty_account a ON g.entity = 'loyalty_account' AND a.loy_id = g.record_id
-LEFT JOIN redemption d ON g.entity = 'redemption' AND d.rdm_id = g.record_id
-LEFT JOIN points_transaction p ON g.entity = 'points_transaction' AND p.pts_id = g.record_id
-LEFT JOIN tier_change t ON g.entity = 'tier_change' AND t.tier_change_id = g.record_id
-LEFT JOIN line_return r ON g.entity = 'line_return' AND r.return_id = g.record_id
-LEFT JOIN order_line l ON l.line_id = r.line_id
-LEFT JOIN orders o ON o.ord_id = l.ord_id
-"""
-
 
 def run_validation(conn) -> dict:
     """Run every check. Pass a connection; the caller controls the transaction."""
     anomaly_accounts = defaultdict(set)
     truth_counts = Counter()
-    for row in conn.execute(ANOMALY_ACCOUNTS).fetchall():
+    for row in conn.execute(GROUND_TRUTH).fetchall():
         anomaly_accounts[row["issue_type"]].add(row["loy_id"])
         truth_counts[row["issue_type"]] += 1
 
