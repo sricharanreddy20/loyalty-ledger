@@ -1,6 +1,6 @@
 # db (PostgreSQL 16), backend (FastAPI) and frontend (static page on nginx).
 # Open http://localhost:8080 for the page and http://localhost:8000/docs for the API.
-# Data is loaded from the host: python -m generator --scale starter --load
+# Load data (Docker only): docker compose run --rm backend python -m generator --scale starter --load
 services:
   db:
     image: postgres:16-alpine

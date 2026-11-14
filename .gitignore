@@ -3,7 +3,13 @@ brief/
 __pycache__/
 *.pyc
 .pytest_cache/
-output/full/
+# full-scale data is large: only the manifest and the evaluation reports are committed
+output/full/*
+!output/full/manifest.json
+!output/full/validation_summary.json
+!output/full/validation_summary.md
+!output/full/anomaly_report.json
+!output/full/anomaly_report.md
 output/.repro/
 .env
 .DS_Store

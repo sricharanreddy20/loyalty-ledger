@@ -69,3 +69,24 @@ def test_stats_totals_and_tier_mix(client, sql):
     assert [t["tier_id"] for t in stats["tier_mix"]] == ["TIER-BRONZE", "TIER-SILVER", "TIER-GOLD", "TIER-PLATINUM"]
     assert sum(t["accounts"] for t in stats["tier_mix"]) == stats["accounts"]
     assert abs(sum(t["share"] for t in stats["tier_mix"]) - 1) < 0.001
+
+
+def test_data_dictionary_lists_exactly_the_database_columns(sql):
+    """docs/data_dictionary.md has a '## `table`' section per table and a '| `column` |' row per column."""
+    import re
+    from pathlib import Path
+    text = (Path(__file__).resolve().parents[2] / "docs" / "data_dictionary.md").read_text()
+    documented, table = set(), None
+    for line in text.splitlines():
+        heading = re.match(r"## `([a-z_.]+)`$", line)
+        if heading:
+            table = heading.group(1)
+        row = re.match(r"\| `([a-z_]+)` \|", line)
+        if row and table:
+            documented.add(f"{table}.{row.group(1)}")
+    actual = {f"{'eval.' if r['table_schema'] == 'eval' else ''}{r['table_name']}.{r['column_name']}" for r in sql(
+        """SELECT table_schema, table_name, column_name FROM information_schema.columns
+           WHERE table_schema IN ('public', 'eval')
+             AND table_name IN (SELECT table_name FROM information_schema.tables
+                                WHERE table_schema IN ('public', 'eval') AND table_type = 'BASE TABLE')""")}
+    assert documented == actual, {"missing": sorted(actual - documented), "extra": sorted(documented - actual)}

@@ -1,0 +1,542 @@
+{
+  "totals": {
+    "checks": 39,
+    "PASS": 31,
+    "EXPECTED_FAIL": 8,
+    "FAIL": 0
+  },
+  "checks": [
+    {
+      "id": "pk_unique",
+      "category": "Primary keys",
+      "description": "Primary key is unique in all 13 tables",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "fk_integrity",
+      "category": "Foreign keys",
+      "description": "Every reference points to an existing parent row (20 relationships)",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "ledger_refs_by_type",
+      "category": "Foreign keys",
+      "description": "Ledger references match the entry type (reversal/expiry -> ACCRUAL of same account; lots -> same account)",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "enums_allowed",
+      "category": "Allowed values",
+      "description": "Enumerated columns hold only allowed values",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "id_formats",
+      "category": "Allowed values",
+      "description": "Every id matches its zero-padded format",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "derived_ids",
+      "category": "Allowed values",
+      "description": "Derived ids are consistent (LOY-<customer>, <order>-<line_no>)",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "order_after_account_opened",
+      "category": "Date order",
+      "description": "Orders are on or after the account was opened",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "accrual_on_order_time",
+      "category": "Date order",
+      "description": "An accrual is dated at its order's timestamp",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "lot_dates",
+      "category": "Date order",
+      "description": "Lot available_from = earned + return window + 1 day; expires_at = earned + lot expiry days",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "return_within_window",
+      "category": "Date order",
+      "description": "A return is after its order and within the return window",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "reversal_while_pending",
+      "category": "Date order",
+      "description": "A reversal is dated at its return and happens before the lot becomes available",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "expiry_on_time",
+      "category": "Date order",
+      "description": "An expiry is not before the lot's expires_at and is dated at its batch's run",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "batch_on_first_of_month",
+      "category": "Date order",
+      "description": "Expiry batches run on the 1st of a month",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "redeemed_lot_was_available",
+      "category": "Date order",
+      "description": "Lots used by a redemption were available on the request date",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "dates_in_program_year",
+      "category": "Date order",
+      "description": "Business events are in 2026 (expiry batches and tier changes may take effect on 2027-01-01)",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "accrual_eligible_net",
+      "category": "Arithmetic",
+      "description": "Accrual eligible_net = unit_price x qty - discount (0 if excluded)",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "accrual_points",
+      "category": "Arithmetic",
+      "description": "Accrual points = floor(eligible_net x rate / 100)",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "accrual_rate_is_tier_in_effect",
+      "category": "Arithmetic",
+      "description": "Accrual rate = earn rate of the tier in effect on the order date",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "every_earning_line_accrued",
+      "category": "Arithmetic",
+      "description": "Every line that earns > 0 points has an accrual",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "refund_amount",
+      "category": "Arithmetic",
+      "description": "Refund = returned share of the line's net amount (discount split in proportion)",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "reversal_amount",
+      "category": "Arithmetic",
+      "description": "Each return reverses exactly the points earned on the returned amount (cumulative rule, original rate)",
+      "status": "EXPECTED_FAIL",
+      "violations": 50,
+      "explained": 50,
+      "unexplained": 0,
+      "explained_by": [
+        "RETURN_KEEPS_POINTS"
+      ],
+      "ground_truth_count": 50,
+      "sample": [
+        "RET-2026-004762",
+        "RET-2026-005560",
+        "RET-2026-005953",
+        "RET-2026-006012",
+        "RET-2026-006350"
+      ]
+    },
+    {
+      "id": "redemption_ledger_amount",
+      "category": "Arithmetic",
+      "description": "A REDEMPTION entry is exactly -points_cost",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "redemption_lots_cover_cost",
+      "category": "Arithmetic",
+      "description": "Lots used by an approved redemption add up to its cost",
+      "status": "EXPECTED_FAIL",
+      "violations": 50,
+      "explained": 50,
+      "unexplained": 0,
+      "explained_by": [
+        "REDEMPTION_EXCEEDS_BALANCE"
+      ],
+      "ground_truth_count": null,
+      "sample": [
+        "RDM-2026-003454",
+        "RDM-2026-003724",
+        "RDM-2026-004519",
+        "RDM-2026-005224",
+        "RDM-2026-006141"
+      ]
+    },
+    {
+      "id": "lot_remaining_not_negative",
+      "category": "Arithmetic",
+      "description": "No lot has given away more points than it earned",
+      "status": "EXPECTED_FAIL",
+      "violations": 50,
+      "explained": 50,
+      "unexplained": 0,
+      "explained_by": [
+        "DOUBLE_EXPIRY"
+      ],
+      "ground_truth_count": null,
+      "sample": [
+        "PTS-2026-00001840",
+        "PTS-2026-00002081",
+        "PTS-2026-00005357",
+        "PTS-2026-00007568",
+        "PTS-2026-00007726"
+      ]
+    },
+    {
+      "id": "redemption_status_vs_ledger",
+      "category": "Lifecycle",
+      "description": "A REJECTED redemption has no ledger entry or lots; an APPROVED one has exactly one ledger entry",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "approved_within_available",
+      "category": "Lifecycle",
+      "description": "An approved redemption costs no more than the available balance when processed",
+      "status": "EXPECTED_FAIL",
+      "violations": 50,
+      "explained": 50,
+      "unexplained": 0,
+      "explained_by": [
+        "REDEMPTION_EXCEEDS_BALANCE"
+      ],
+      "ground_truth_count": 50,
+      "sample": [
+        "RDM-2026-003454",
+        "RDM-2026-003724",
+        "RDM-2026-004519",
+        "RDM-2026-005224",
+        "RDM-2026-006141"
+      ]
+    },
+    {
+      "id": "tier_changes_upgrade_in_chain",
+      "category": "Lifecycle",
+      "description": "Tier changes only go up and each starts from the previous change's new tier",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "account_tier_is_latest_change",
+      "category": "Lifecycle",
+      "description": "An account's tier is its latest tier change (or the base tier)",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "returned_qty_within_line",
+      "category": "Lifecycle",
+      "description": "Units returned never exceed units bought",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "one_accrual_per_line",
+      "category": "Duplicates",
+      "description": "At most one accrual per order line",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "one_reversal_per_return",
+      "category": "Duplicates",
+      "description": "At most one reversal per return",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "unique_customer_email",
+      "category": "Duplicates",
+      "description": "Customer emails are unique (case-insensitive)",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "one_batch_per_run_date",
+      "category": "Duplicates",
+      "description": "One expiry batch per run date",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "A1_balance_equals_ledger",
+      "category": "Acceptance",
+      "description": "Account balance equals the sum of its ledger entries",
+      "status": "EXPECTED_FAIL",
+      "violations": 50,
+      "explained": 50,
+      "unexplained": 0,
+      "explained_by": [
+        "BALANCE_MISMATCH"
+      ],
+      "ground_truth_count": 50,
+      "sample": [
+        "LOY-CUST-000290",
+        "LOY-CUST-000528",
+        "LOY-CUST-000922",
+        "LOY-CUST-002614",
+        "LOY-CUST-002971"
+      ]
+    },
+    {
+      "id": "A2_reversal_references_accrual",
+      "category": "Acceptance",
+      "description": "Every reversal references an existing original ACCRUAL of the same account and the returned line",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "A3_no_lot_expired_twice",
+      "category": "Acceptance",
+      "description": "Expiry is idempotent: no lot is expired more than once",
+      "status": "EXPECTED_FAIL",
+      "violations": 50,
+      "explained": 50,
+      "unexplained": 0,
+      "explained_by": [
+        "DOUBLE_EXPIRY"
+      ],
+      "ground_truth_count": 50,
+      "sample": [
+        "PTS-2026-00301654",
+        "PTS-2026-00301655",
+        "PTS-2026-00301656",
+        "PTS-2026-00301657",
+        "PTS-2026-00301658"
+      ]
+    },
+    {
+      "id": "A3_rerun_adds_nothing",
+      "category": "Acceptance",
+      "description": "Expiry is idempotent: re-running the latest batch would expire nothing new",
+      "status": "PASS",
+      "violations": 0,
+      "explained": 0,
+      "unexplained": 0,
+      "explained_by": [],
+      "ground_truth_count": null,
+      "sample": []
+    },
+    {
+      "id": "A4_tier_change_earned",
+      "category": "Acceptance",
+      "description": "Every tier change was reached by qualifying spend (eligible net minus returns) before it took effect",
+      "status": "EXPECTED_FAIL",
+      "violations": 50,
+      "explained": 50,
+      "unexplained": 0,
+      "explained_by": [
+        "TIER_USES_GROSS_SPEND"
+      ],
+      "ground_truth_count": 50,
+      "sample": [
+        "TCH-2026-009504",
+        "TCH-2026-009505",
+        "TCH-2026-009506",
+        "TCH-2026-009507",
+        "TCH-2026-009508"
+      ]
+    },
+    {
+      "id": "A4_account_tier_follows_thresholds",
+      "category": "Acceptance",
+      "description": "Each account's tier is the highest tier its peak qualifying spend reached",
+      "status": "EXPECTED_FAIL",
+      "violations": 50,
+      "explained": 50,
+      "unexplained": 0,
+      "explained_by": [
+        "TIER_USES_GROSS_SPEND"
+      ],
+      "ground_truth_count": null,
+      "sample": [
+        "LOY-CUST-000077",
+        "LOY-CUST-000448",
+        "LOY-CUST-000555",
+        "LOY-CUST-000615",
+        "LOY-CUST-001130"
+      ]
+    }
+  ]
+}

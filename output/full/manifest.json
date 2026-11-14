@@ -1,0 +1,203 @@
+{
+  "seed": 20261022,
+  "scale": "full",
+  "dataset_fingerprint": "65b239c0a9caeab73d8d04dd5d4e4b4cf666865ec24bb6b7125329e6b06876e4",
+  "table_rows": {
+    "tier": 4,
+    "rule": 9,
+    "reward": 10,
+    "customer": 20000,
+    "loyalty_account": 20000,
+    "tier_change": 9553,
+    "expiry_batch": 12,
+    "orders": 100000,
+    "order_line": 251837,
+    "line_return": 18689,
+    "redemption": 12655,
+    "points_transaction": 301653,
+    "redemption_lot": 66607
+  },
+  "anomalies": {
+    "REDEMPTION_EXCEEDS_BALANCE": 50,
+    "RETURN_KEEPS_POINTS": 50,
+    "DOUBLE_EXPIRY": 50,
+    "TIER_USES_GROSS_SPEND": 50,
+    "BALANCE_MISMATCH": 50
+  },
+  "files": [
+    {
+      "path": "csv/customer.csv",
+      "rows": 20000,
+      "bytes": 1447296,
+      "sha256": "e371538cc1ed0ff6a498dd4d991af6bfc9468dd6c0ddb23a679ae13d538b3fe6"
+    },
+    {
+      "path": "csv/expiry_batch.csv",
+      "rows": 12,
+      "bytes": 592,
+      "sha256": "f48b2ab6dddfecc19fb348b9bd495f3fcd90c7073d77daa3283fc63cbd8f8b21"
+    },
+    {
+      "path": "csv/line_return.csv",
+      "rows": 18689,
+      "bytes": 1206584,
+      "sha256": "7a27d2bfc079b49e186bae71b7d33c1775b17627a670cc107bf6962f5ec602c5"
+    },
+    {
+      "path": "csv/loyalty_account.csv",
+      "rows": 20000,
+      "bytes": 1080828,
+      "sha256": "794b9d054932a53081baf8b90b556765984d53d8bf45a6b7fb5deff79392fc8b"
+    },
+    {
+      "path": "csv/order_line.csv",
+      "rows": 251837,
+      "bytes": 18334108,
+      "sha256": "af16e694fc38f0ae674298017292178d36abae0b98947354fcf6dbdc758b32e0"
+    },
+    {
+      "path": "csv/orders.csv",
+      "rows": 100000,
+      "bytes": 7117373,
+      "sha256": "3a17640ec873269f9c938973847f306b67c2bbd700bff5b810858888fb810558"
+    },
+    {
+      "path": "csv/points_transaction.csv",
+      "rows": 301653,
+      "bytes": 35616585,
+      "sha256": "e56b911d5ff1b25f3036eb354ab3fce08381adf8e59d6832ed1c1bc7ffb8546b"
+    },
+    {
+      "path": "csv/redemption.csv",
+      "rows": 12655,
+      "bytes": 1010528,
+      "sha256": "f4bbbffe31b2ea7010ff067eb139537ef12a9149263eefbef0936221bb5df526"
+    },
+    {
+      "path": "csv/redemption_lot.csv",
+      "rows": 66607,
+      "bytes": 2444276,
+      "sha256": "a9bc3195048fa4c419498ebb506e25f3a8447215c39cecc1681a68fea8a5834b"
+    },
+    {
+      "path": "csv/reward.csv",
+      "rows": 10,
+      "bytes": 427,
+      "sha256": "d79df2777c098216fb6ed02f56a38f227bc11b88e65c0825e0ea85c13a279bc8"
+    },
+    {
+      "path": "csv/rule.csv",
+      "rows": 9,
+      "bytes": 1052,
+      "sha256": "bcb78123be3302c567161dd9f8641a90294fb2025e3c5b495ed4bf65ed060d4c"
+    },
+    {
+      "path": "csv/tier.csv",
+      "rows": 4,
+      "bytes": 167,
+      "sha256": "f1eb3a03d3f85ba51bd3728b133a062b7f965e80d06dc3615b34dc10c74ddcf4"
+    },
+    {
+      "path": "csv/tier_change.csv",
+      "rows": 9553,
+      "bytes": 722158,
+      "sha256": "991b3ac385c822b6ca4c0193b32e1ee4566a1add8282c9eee0fac5641d693854"
+    },
+    {
+      "path": "ground_truth.csv",
+      "rows": 250,
+      "bytes": 45289,
+      "sha256": "796e63c0242dc7322d6f002aa692d0841b85936e2188e66e904da860bfa6ef9c"
+    },
+    {
+      "path": "ground_truth.json",
+      "rows": 250,
+      "bytes": 66638,
+      "sha256": "6d022834644a4e4275dac637f37f8e1f38b38b7f128979078b60d1784f17719a"
+    },
+    {
+      "path": "json/customer.json",
+      "rows": 20000,
+      "bytes": 3327243,
+      "sha256": "79209c5e9feba125620eeffde33662159347dd8e8462e65aec2f58059b9a2e6c"
+    },
+    {
+      "path": "json/expiry_batch.json",
+      "rows": 12,
+      "bytes": 1143,
+      "sha256": "90524827389e4093313f35a956631b0b7fae1c789295d2c9d7e9f7ca23868d49"
+    },
+    {
+      "path": "json/line_return.json",
+      "rows": 18689,
+      "bytes": 2795097,
+      "sha256": "2e4c63553b165020813bc0042994970cab1a21296211f6a58c6799b26f5e10b7"
+    },
+    {
+      "path": "json/loyalty_account.json",
+      "rows": 20000,
+      "bytes": 2740778,
+      "sha256": "c046b90a886814a0068251353143edddc563384826b151cd19d2c84e3a1541ae"
+    },
+    {
+      "path": "json/order_line.json",
+      "rows": 251837,
+      "bytes": 45028773,
+      "sha256": "48d0e9ef139c8887544588ad6d552583a49adfbd28e5d00e0c60bc940fca3ced"
+    },
+    {
+      "path": "json/orders.json",
+      "rows": 100000,
+      "bytes": 16717318,
+      "sha256": "846abad6594779d5fb05f13d19ecf77bcca07ed08ad592aa124678182e3cac19"
+    },
+    {
+      "path": "json/points_transaction.json",
+      "rows": 301653,
+      "bytes": 111121360,
+      "sha256": "34b28f675eb68de5945abc0968caf21ce41391619b39db34389a0fff41636817"
+    },
+    {
+      "path": "json/redemption.json",
+      "rows": 12655,
+      "bytes": 2446913,
+      "sha256": "1afa3b06445876629c563ac71aeb5dfde5bcdca1795dde36ebd4070de98f0319"
+    },
+    {
+      "path": "json/redemption_lot.json",
+      "rows": 66607,
+      "bytes": 5641385,
+      "sha256": "8c851b3a9902bdb0166e7c02d53afd134481c79a4c3563821728a3cb87e8e767"
+    },
+    {
+      "path": "json/reward.json",
+      "rows": 10,
+      "bytes": 956,
+      "sha256": "dd6ca5c725039bb96e9fff175b112b70b2e934e5b77455f95dcd84d66031f50a"
+    },
+    {
+      "path": "json/rule.json",
+      "rows": 9,
+      "bytes": 2299,
+      "sha256": "2e877831aedafb7b48ba3e54bd006b2cfe4adc809a4c3c1dd55ed33d6820a4c1"
+    },
+    {
+      "path": "json/tier.json",
+      "rows": 4,
+      "bytes": 437,
+      "sha256": "ca835d6d60e8a12ec2d39d392787e9518f9fc8a42d55971e074724c487996723"
+    },
+    {
+      "path": "json/tier_change.json",
+      "rows": 9553,
+      "bytes": 1925751,
+      "sha256": "f3cad35e0533c52e020277143169be63341b2d98a2214f16e5d8990cab7bb900"
+    },
+    {
+      "path": "sql/seed.sql",
+      "rows": 801029,
+      "bytes": 93249586,
+      "sha256": "df7bca1c7a38f66895fd42fe08de8661f3ce82b3149c68ee1947a3ba3393b100"
+    }
+  ]
+}
