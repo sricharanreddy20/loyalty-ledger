@@ -1,5 +1,10 @@
 -- Schema smoke test. Runs inside one transaction and rolls back, so it leaves no data.
--- Usage: docker compose exec -T db psql -U loyalty -d loyalty -v ON_ERROR_STOP=1 -f - < db/tests/smoke_test.sql
+-- It needs an EMPTY database with only db/schema.sql applied (its fixed test IDs would clash
+-- with loaded data). Usage, with a throwaway database:
+--   docker compose exec -T db psql -U loyalty -d loyalty -c "DROP DATABASE IF EXISTS smokecheck" -c "CREATE DATABASE smokecheck"
+--   docker compose exec -T db psql -q -U loyalty -d smokecheck -f - < db/schema.sql
+--   docker compose exec -T db psql -q -U loyalty -d smokecheck -v ON_ERROR_STOP=1 -f - < db/tests/smoke_test.sql
+--   docker compose exec -T db psql -U loyalty -d loyalty -c "DROP DATABASE smokecheck"
 \set QUIET on
 \o /dev/null
 BEGIN;
