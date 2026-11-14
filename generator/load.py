@@ -11,6 +11,10 @@ import psycopg
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = ROOT / "db" / "schema.sql"
+# sequence -> (table, id column): set past the highest loaded number so the API continues from there
+SEQUENCES = {"ord_seq": ("orders", "ord_id"), "pts_seq": ("points_transaction", "pts_id"),
+             "ret_seq": ("line_return", "return_id"), "rdm_seq": ("redemption", "rdm_id"),
+             "exp_seq": ("expiry_batch", "exp_id"), "tch_seq": ("tier_change", "tier_change_id")}
 
 
 def database_url() -> str:
@@ -43,6 +47,9 @@ def load(out_dir: Path, url: str | None = None) -> dict[str, int]:
             for table in manifest["table_rows"]:              # manifest keeps foreign-key load order
                 _copy_csv(cur, table, out_dir / "csv" / f"{table}.csv")
             _copy_csv(cur, "eval.ground_truth", out_dir / "ground_truth.csv")
+            for seq, (table, column) in SEQUENCES.items():
+                cur.execute(f"SELECT setval('{seq}', COALESCE(MAX((regexp_match({column}, '([0-9]+)$'))[1]::int), 0) + 1, false) "
+                            f"FROM {table}")
             counts = {}
             for table in list(manifest["table_rows"]) + ["eval.ground_truth"]:
                 cur.execute(f"SELECT count(*) FROM {table}")

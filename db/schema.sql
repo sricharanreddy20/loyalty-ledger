@@ -8,6 +8,8 @@
 
 DROP SCHEMA IF EXISTS eval CASCADE;
 DROP FUNCTION IF EXISTS lot_status(date);
+DROP FUNCTION IF EXISTS lot_status(date, text);
+DROP SEQUENCE IF EXISTS ord_seq, pts_seq, ret_seq, rdm_seq, exp_seq, tch_seq;
 DROP TABLE IF EXISTS
     redemption_lot, points_transaction, redemption, reward, expiry_batch,
     line_return, order_line, orders, tier_change, loyalty_account, customer, rule, tier
@@ -169,6 +171,16 @@ CREATE TABLE redemption_lot (
     PRIMARY KEY (rdm_id, lot_pts_id)
 );
 
+-- ---------------------------------------------------------------- id counters for the API
+-- nextval() is atomic: two concurrent transactions never get the same number (a rollback
+-- leaves a gap). The loader sets each sequence past the highest loaded id.
+CREATE SEQUENCE ord_seq;
+CREATE SEQUENCE pts_seq;
+CREATE SEQUENCE ret_seq;
+CREATE SEQUENCE rdm_seq;
+CREATE SEQUENCE exp_seq;
+CREATE SEQUENCE tch_seq;
+
 -- ---------------------------------------------------------------- indexes
 
 CREATE UNIQUE INDEX one_accrual_per_line ON points_transaction (line_id) WHERE txn_type = 'ACCRUAL';
@@ -185,10 +197,10 @@ CREATE INDEX tier_change_acct  ON tier_change (loy_id);
 
 -- ---------------------------------------------------------------- lot status as of a date
 
--- One row per lot earned on or before as_of. Status precedence:
+-- One row per lot earned on or before as_of (optionally for one account). Status precedence:
 -- EXPIRED (by a batch) > REVERSED (fully) > CONSUMED (nothing left) > EXPIRED (due, awaiting batch)
 -- > PENDING (inside return window) > PARTIAL (partly redeemed) > AVAILABLE.
-CREATE FUNCTION lot_status(as_of date DEFAULT DATE '2026-12-31')
+CREATE FUNCTION lot_status(as_of date DEFAULT DATE '2026-12-31', account text DEFAULT NULL)
 RETURNS TABLE (
     lot_pts_id TEXT, loy_id TEXT, earned_at TIMESTAMP, available_from DATE, expires_at DATE,
     original INT, reversed INT, redeemed INT, expired INT, remaining INT, status TEXT
@@ -208,6 +220,7 @@ LANGUAGE sql STABLE AS $$
                            AND e.txn_ts::date <= as_of), 0)::int AS expired
         FROM points_transaction a
         WHERE a.txn_type = 'ACCRUAL' AND a.txn_ts::date <= as_of
+          AND (account IS NULL OR a.loy_id = account)
     )
     SELECT pts_id, loy_id, txn_ts, available_from, expires_at, points,
            reversed, redeemed, expired,
