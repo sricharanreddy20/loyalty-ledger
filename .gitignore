@@ -4,5 +4,8 @@ __pycache__/
 *.pyc
 .pytest_cache/
 output/full/
+output/.repro/
 .env
 .DS_Store
+output/starter/json/
+output/starter/sql/

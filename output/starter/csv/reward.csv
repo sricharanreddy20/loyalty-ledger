@@ -1,0 +1,11 @@
+reward_id,name,points_cost,active
+RWD-0001,Coffee voucher,100,true
+RWD-0002,Movie ticket,250,true
+RWD-0003,Rs 250 shopping voucher,500,true
+RWD-0004,Free delivery pass (3 months),750,true
+RWD-0005,Rs 500 shopping voucher,1000,true
+RWD-0006,Bluetooth earphones,1500,true
+RWD-0007,Rs 1000 shopping voucher,2000,true
+RWD-0008,Smart watch,3000,true
+RWD-0009,Weekend hotel stay,4000,true
+RWD-0010,Rs 2500 shopping voucher,5000,true

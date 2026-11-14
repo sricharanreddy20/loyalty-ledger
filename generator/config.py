@@ -13,12 +13,12 @@ class Scale:
     name: str
     customers: int
     orders: int
-    anomaly_rate: float   # share of eligible records mutated per anomaly type (used in Step 4)
+    anomalies_per_type: int   # labelled records injected per anomaly type
 
 
 SCALES = {
-    "starter": Scale("starter", customers=1_000, orders=5_000, anomaly_rate=0.0025),
-    "full": Scale("full", customers=20_000, orders=100_000, anomaly_rate=0.0025),
+    "starter": Scale("starter", customers=1_000, orders=5_000, anomalies_per_type=10),
+    "full": Scale("full", customers=20_000, orders=100_000, anomalies_per_type=50),
 }
 
 # ---------------------------------------------------------------- customers

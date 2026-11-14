@@ -1,0 +1,10 @@
+rule_id,rule_type,tier_id,category,value,unit,description,effective_from,effective_to
+RULE-0001,EARN_RATE,TIER-BRONZE,,1,POINTS_PER_100_INR,Bronze earns 1 points per 100 INR of eligible net spend,2026-01-01,
+RULE-0002,EARN_RATE,TIER-SILVER,,1.25,POINTS_PER_100_INR,Silver earns 1.25 points per 100 INR of eligible net spend,2026-01-01,
+RULE-0003,EARN_RATE,TIER-GOLD,,1.5,POINTS_PER_100_INR,Gold earns 1.5 points per 100 INR of eligible net spend,2026-01-01,
+RULE-0004,EARN_RATE,TIER-PLATINUM,,2,POINTS_PER_100_INR,Platinum earns 2 points per 100 INR of eligible net spend,2026-01-01,
+RULE-0005,CATEGORY_EXCLUSION,,GIFT_CARD,,,Gift card lines never earn points,2026-01-01,
+RULE-0006,CATEGORY_EXCLUSION,,SHIPPING,,,Shipping (order header) never earns points,2026-01-01,
+RULE-0007,CATEGORY_EXCLUSION,,TAX,,,Tax (order header) never earns points,2026-01-01,
+RULE-0008,LOT_EXPIRY,,,180,DAYS,A lot expires 180 days after it is earned,2026-01-01,
+RULE-0009,RETURN_WINDOW,,,30,DAYS,Returns allowed through day 30; points become available on day 31,2026-01-01,

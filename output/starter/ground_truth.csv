@@ -1,0 +1,51 @@
+record_id,entity,issue_type,description,rule_violated
+RDM-2026-000382,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 500 points when only 69 were available,A redemption is approved only if points_cost <= available balance
+RDM-2026-000421,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 4000 points when only 83 were available,A redemption is approved only if points_cost <= available balance
+RDM-2026-000188,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 1000 points when only 0 were available,A redemption is approved only if points_cost <= available balance
+RDM-2026-000415,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 1000 points when only 0 were available,A redemption is approved only if points_cost <= available balance
+RDM-2026-000614,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 5000 points when only 14 were available,A redemption is approved only if points_cost <= available balance
+RDM-2026-000532,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 1500 points when only 36 were available,A redemption is approved only if points_cost <= available balance
+RDM-2026-000347,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 750 points when only 88 were available,A redemption is approved only if points_cost <= available balance
+RDM-2026-000592,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 3000 points when only 19 were available,A redemption is approved only if points_cost <= available balance
+RDM-2026-000493,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 5000 points when only 23 were available,A redemption is approved only if points_cost <= available balance
+RDM-2026-000364,redemption,REDEMPTION_EXCEEDS_BALANCE,Approved 100 points when only 0 were available,A redemption is approved only if points_cost <= available balance
+RET-2026-000569,line_return,RETURN_KEEPS_POINTS,Return of 4 unit(s) on ORD-2026-003053-04 has no reversal; 46 points kept,Every return reverses the points earned on the returned amount
+RET-2026-000505,line_return,RETURN_KEEPS_POINTS,Return of 1 unit(s) on ORD-2026-002485-01 has no reversal; 6 points kept,Every return reverses the points earned on the returned amount
+RET-2026-000357,line_return,RETURN_KEEPS_POINTS,Return of 1 unit(s) on ORD-2026-001730-03 has no reversal; 16 points kept,Every return reverses the points earned on the returned amount
+RET-2026-000413,line_return,RETURN_KEEPS_POINTS,Return of 1 unit(s) on ORD-2026-001915-02 has no reversal; 4 points kept,Every return reverses the points earned on the returned amount
+RET-2026-000283,line_return,RETURN_KEEPS_POINTS,Return of 1 unit(s) on ORD-2026-001334-03 has no reversal; 15 points kept,Every return reverses the points earned on the returned amount
+RET-2026-000678,line_return,RETURN_KEEPS_POINTS,Return of 1 unit(s) on ORD-2026-003382-03 has no reversal; 4 points kept,Every return reverses the points earned on the returned amount
+RET-2026-000441,line_return,RETURN_KEEPS_POINTS,Return of 1 unit(s) on ORD-2026-001983-01 has no reversal; 23 points kept,Every return reverses the points earned on the returned amount
+RET-2026-000653,line_return,RETURN_KEEPS_POINTS,Return of 2 unit(s) on ORD-2026-003242-04 has no reversal; 26 points kept,Every return reverses the points earned on the returned amount
+RET-2026-000300,line_return,RETURN_KEEPS_POINTS,Return of 2 unit(s) on ORD-2026-001328-01 has no reversal; 4 points kept,Every return reverses the points earned on the returned amount
+RET-2026-000689,line_return,RETURN_KEEPS_POINTS,Return of 1 unit(s) on ORD-2026-003489-01 has no reversal; 3 points kept,Every return reverses the points earned on the returned amount
+PTS-2026-00015118,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00002255 expired again in EXP-2026-000012 (already expired in EXP-2026-000011),A lot is expired at most once; re-running expiry adds nothing
+PTS-2026-00015119,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00001211 expired again in EXP-2026-000010 (already expired in EXP-2026-000009),A lot is expired at most once; re-running expiry adds nothing
+PTS-2026-00015120,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00001758 expired again in EXP-2026-000011 (already expired in EXP-2026-000010),A lot is expired at most once; re-running expiry adds nothing
+PTS-2026-00015121,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00000442 expired again in EXP-2026-000009 (already expired in EXP-2026-000008),A lot is expired at most once; re-running expiry adds nothing
+PTS-2026-00015122,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00001438 expired again in EXP-2026-000010 (already expired in EXP-2026-000009),A lot is expired at most once; re-running expiry adds nothing
+PTS-2026-00015123,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00001689 expired again in EXP-2026-000011 (already expired in EXP-2026-000010),A lot is expired at most once; re-running expiry adds nothing
+PTS-2026-00015124,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00001461 expired again in EXP-2026-000011 (already expired in EXP-2026-000010),A lot is expired at most once; re-running expiry adds nothing
+PTS-2026-00015125,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00002254 expired again in EXP-2026-000012 (already expired in EXP-2026-000011),A lot is expired at most once; re-running expiry adds nothing
+PTS-2026-00015126,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00002056 expired again in EXP-2026-000012 (already expired in EXP-2026-000011),A lot is expired at most once; re-running expiry adds nothing
+PTS-2026-00015127,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00000556 expired again in EXP-2026-000009 (already expired in EXP-2026-000008),A lot is expired at most once; re-running expiry adds nothing
+TCH-2026-000495,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000784 moved TIER-SILVER -> TIER-GOLD using gross spend 84950.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000496,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000574 moved TIER-GOLD -> TIER-PLATINUM using gross spend 235027.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000497,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000834 moved TIER-BRONZE -> TIER-SILVER using gross spend 28777.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000498,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000570 moved TIER-SILVER -> TIER-GOLD using gross spend 79108.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000499,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000472 moved TIER-SILVER -> TIER-GOLD using gross spend 103729.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000500,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000271 moved TIER-SILVER -> TIER-GOLD using gross spend 103152.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000501,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000222 moved TIER-BRONZE -> TIER-SILVER using gross spend 29429.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000502,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000372 moved TIER-BRONZE -> TIER-SILVER using gross spend 25225.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000503,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000766 moved TIER-SILVER -> TIER-GOLD using gross spend 77532.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000504,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000884 moved TIER-GOLD -> TIER-PLATINUM using gross spend 235027.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+LOY-CUST-000159,loyalty_account,BALANCE_MISMATCH,current_balance 342 but ledger sum is 0,Account balance equals the sum of its ledger entries
+LOY-CUST-000927,loyalty_account,BALANCE_MISMATCH,current_balance 575 but ledger sum is 189,Account balance equals the sum of its ledger entries
+LOY-CUST-000210,loyalty_account,BALANCE_MISMATCH,current_balance 365 but ledger sum is 16,Account balance equals the sum of its ledger entries
+LOY-CUST-000412,loyalty_account,BALANCE_MISMATCH,current_balance 135 but ledger sum is 513,Account balance equals the sum of its ledger entries
+LOY-CUST-000814,loyalty_account,BALANCE_MISMATCH,current_balance 151 but ledger sum is 0,Account balance equals the sum of its ledger entries
+LOY-CUST-000690,loyalty_account,BALANCE_MISMATCH,current_balance -59 but ledger sum is 207,Account balance equals the sum of its ledger entries
+LOY-CUST-000488,loyalty_account,BALANCE_MISMATCH,current_balance -45 but ledger sum is 166,Account balance equals the sum of its ledger entries
+LOY-CUST-000495,loyalty_account,BALANCE_MISMATCH,current_balance 123 but ledger sum is 406,Account balance equals the sum of its ledger entries
+LOY-CUST-000549,loyalty_account,BALANCE_MISMATCH,current_balance -400 but ledger sum is 0,Account balance equals the sum of its ledger entries
+LOY-CUST-000202,loyalty_account,BALANCE_MISMATCH,current_balance 91 but ledger sum is 72,Account balance equals the sum of its ledger entries
