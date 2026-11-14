@@ -143,4 +143,4 @@ PK uniqueness, FK integrity, allowed enums, date order, arithmetic reconciliatio
 CHECKPOINT: by ~17:00 the DB is loaded and at least the read API works. If behind, cut the detector first, then frontend polish.
 
 ## Current status
-Step 0 not started. (Update after each completed step.)
+Step 0 done: repo layout, .gitignore, .env.example, docker-compose (db only, host port 5433 because a local Postgres uses 5432), core/config.py (tiers, rules, AS_OF_DATE), generator/config.py (seed, scales), core/ids.py + tests/test_ids.py (14 passing). Local venv uses the installed python3 (3.14); backend image will be python:3.12-slim. Next: Step 1. (Update after each completed step.)

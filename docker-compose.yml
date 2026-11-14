@@ -1,0 +1,19 @@
+# Step 0: database only. backend (Step 5) and frontend (Step 7) are added later.
+services:
+  db:
+    image: postgres:16-alpine
+    env_file: .env
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Scripts in db/ (e.g. schema.sql, Step 1) run once, on first start of an empty volume.
+      - ./db:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
