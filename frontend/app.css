@@ -76,6 +76,7 @@ input, select, button { font: inherit; padding: 6px 9px; border: 1px solid var(-
                         background: var(--panel); color: var(--text); }
 #search { flex: 1 1 220px; min-width: 0; }
 button { background: var(--accent); border-color: var(--accent); color: #fff; cursor: pointer; }
+button.secondary { background: var(--panel); color: var(--accent); margin-top: 8px; }
 button:disabled { opacity: .6; cursor: progress; }
 
 .actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }

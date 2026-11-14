@@ -197,7 +197,7 @@ The container (Python 3.12) and the host (Python 3.14) produce the same dataset 
 - **Not every "concurrent" redemption pair exceeds the balance when processed.** At full scale, the 200 same-timestamp pairs ended up as 135 approved+rejected, 46 rejected+rejected, 18 approved+approved and 1 rejected+approved. Each pair is still processed in (timestamp, ID) order. The approved+rejected case the rules call for is well covered.
 - **The API can't back-date writes,** and after the 2027-01-01 expiry batch the 2026 write window is closed. Reload the data to start again.
 - **No authentication;** the API is for local use.
-- **The frontend shows at most 50 search results,** and it shows the full ledger of an account without paging.
+- **The account ledger and lots tables are not paged:** an account's full history loads at once. (Account search is paged: it shows "Showing X of Y accounts" and loads 50 more at a time. `GET /accounts` takes `limit`/`offset` and returns the total in an `X-Total-Count` header.)
 
 ## Running the tests
 
@@ -216,7 +216,7 @@ docker compose up -d db
 .venv/bin/python -m pytest -q
 ```
 
-The suite has 163 tests:
+The suite has 165 tests:
 - `core/` rule functions, ID formats, the generator, anomalies and exports;
 - API reads and writes, the concurrency test against a real server, and expiry idempotency;
 - validation and the detector, including a clean-baseline database, an unlabelled corruption and a check after API writes;

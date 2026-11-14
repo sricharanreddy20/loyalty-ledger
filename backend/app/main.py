@@ -20,6 +20,7 @@ app.add_middleware(
     allow_origins=[o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:8080").split(",") if o.strip()],
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
+    expose_headers=["X-Total-Count"],     # lets the page read the total of GET /accounts
 )
 install_handlers(app)
 app.include_router(reads.router)

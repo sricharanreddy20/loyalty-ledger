@@ -15,7 +15,8 @@ async function api(path, options = {}) {
     return { ok: false, status: 0, data: { error: "NETWORK_ERROR", detail: `cannot reach the API at ${API}` } };
   }
   const data = await response.json().catch(() => ({ error: "BAD_RESPONSE", detail: "response was not JSON" }));
-  return { ok: response.ok, status: response.status, data };
+  const total = response.headers.get("X-Total-Count");     // set by GET /accounts (all pages)
+  return { ok: response.ok, status: response.status, data, total: total === null ? null : Number(total) };
 }
 
 function esc(value) {
@@ -162,13 +163,31 @@ async function loadAnomalies() {
 
 // ---------------------------------------------------------------- accounts
 
+const PAGE_SIZE = 50;
+const search = { query: null, rows: [], total: 0 };    // the current search and what is loaded so far
+
 async function searchAccounts(event) {
   if (event) event.preventDefault();
-  const params = new URLSearchParams({ limit: "50" });
-  if ($("search").value.trim()) params.set("search", $("search").value.trim());
-  if ($("tier-filter").value) params.set("tier", $("tier-filter").value);
+  const query = new URLSearchParams();
+  if ($("search").value.trim()) query.set("search", $("search").value.trim());
+  if ($("tier-filter").value) query.set("tier", $("tier-filter").value);
+  Object.assign(search, { query, rows: [], total: 0 });
+  await loadMoreAccounts();
+}
+
+async function loadMoreAccounts() {
+  const params = new URLSearchParams(search.query);
+  params.set("limit", String(PAGE_SIZE));
+  params.set("offset", String(search.rows.length));
+  $("load-more").disabled = true;
   const r = await api("/accounts?" + params);
+  $("load-more").disabled = false;
   if (!r.ok) return showError("search-results", r);
+  search.rows = search.rows.concat(r.data);
+  search.total = r.total ?? search.rows.length;
+  $("search-count").textContent =
+    `Showing ${int(search.rows.length)} of ${int(search.total)} account${search.total === 1 ? "" : "s"}`;
+  $("load-more").hidden = search.rows.length >= search.total;
   $("search-results").innerHTML = table([
     { key: "loy_id", label: "Account" },
     { key: "name", label: "Name" },
@@ -176,7 +195,7 @@ async function searchAccounts(event) {
     { key: "city", label: "City" },
     { key: "tier_id", label: "Tier" },
     { key: "current_balance", label: "Balance", num: true, render: (a) => int(a.current_balance) },
-  ], r.data, (a) => `class="click" tabindex="0" data-account="${esc(a.loy_id)}"`);
+  ], search.rows, (a) => `class="click" tabindex="0" data-account="${esc(a.loy_id)}"`);
 }
 
 async function openAccount(loyId) {
@@ -316,6 +335,7 @@ function openFromRow(event) {
 
 document.addEventListener("DOMContentLoaded", () => {
   $("search-form").addEventListener("submit", searchAccounts);
+  $("load-more").addEventListener("click", loadMoreAccounts);
   $("redeem-form").addEventListener("submit", redeem);
   $("return-form").addEventListener("submit", returnLine);
   $("expiry-form").addEventListener("submit", runExpiry);

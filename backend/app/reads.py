@@ -1,7 +1,7 @@
 """Read endpoints."""
 from datetime import date
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Response
 
 from backend.app.db import transaction
 from backend.app.detector import detect, score
@@ -51,8 +51,10 @@ def get_stats():
 
 
 @router.get("/accounts", response_model=list[AccountSummary], tags=["accounts"])
-def list_accounts(search: str | None = None, tier: str | None = None,
-                  limit: int = Query(50, ge=1, le=500)):
+def list_accounts(response: Response, search: str | None = None, tier: str | None = None,
+                  limit: int = Query(50, ge=1, le=500), offset: int = Query(0, ge=0)):
+    """One page of matching accounts, ordered by loy_id. The total number of matches
+    (all pages) is in the X-Total-Count response header; the body stays a plain list."""
     where, params = [], []
     if search:
         where.append("(a.loy_id ILIKE %s OR c.first_name || ' ' || c.last_name ILIKE %s OR c.email ILIKE %s)")
@@ -60,9 +62,14 @@ def list_accounts(search: str | None = None, tier: str | None = None,
     if tier:
         where.append("a.tier_id = %s")
         params.append(tier if tier.startswith("TIER-") else f"TIER-{tier.upper()}")
-    sql = ACCOUNT_SELECT + (" WHERE " + " AND ".join(where) if where else "") + " ORDER BY a.loy_id LIMIT %s"
+    condition = " WHERE " + " AND ".join(where) if where else ""
     with transaction() as conn:
-        return conn.execute(sql, (*params, limit)).fetchall()
+        total = conn.execute("SELECT count(*) AS n FROM loyalty_account a JOIN customer c USING (customer_id)"
+                             + condition, params).fetchone()["n"]
+        rows = conn.execute(ACCOUNT_SELECT + condition + " ORDER BY a.loy_id LIMIT %s OFFSET %s",
+                            (*params, limit, offset)).fetchall()
+    response.headers["X-Total-Count"] = str(total)
+    return rows
 
 
 @router.get("/accounts/{loy_id}", response_model=AccountDetail, tags=["accounts"])

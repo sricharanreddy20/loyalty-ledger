@@ -13,6 +13,28 @@ def test_list_accounts_filters(client):
     assert len(client.get("/accounts", params={"limit": 3}).json()) == 3
 
 
+def test_list_accounts_reports_total_and_pages_with_offset(client, sql):
+    bronze = sql("SELECT loy_id FROM loyalty_account WHERE tier_id = 'TIER-BRONZE' ORDER BY loy_id")
+    first = client.get("/accounts", params={"tier": "BRONZE", "limit": 50})
+    assert isinstance(first.json(), list) and len(first.json()) == 50       # body is still a plain list
+    assert int(first.headers["X-Total-Count"]) == len(bronze) > 50
+    pages, offset = [], 0
+    while offset < len(bronze):
+        page = client.get("/accounts", params={"tier": "BRONZE", "limit": 200, "offset": offset})
+        assert int(page.headers["X-Total-Count"]) == len(bronze)
+        pages += [a["loy_id"] for a in page.json()]
+        offset += 200
+    assert pages == [r["loy_id"] for r in bronze]                          # no gaps, no overlaps
+    past_end = client.get("/accounts", params={"tier": "BRONZE", "offset": len(bronze)})
+    assert past_end.json() == [] and int(past_end.headers["X-Total-Count"]) == len(bronze)
+    assert client.get("/accounts", params={"offset": -1}).status_code == 400
+
+
+def test_total_count_header_is_exposed_to_the_frontend(client):
+    response = client.get("/accounts", params={"limit": 1}, headers={"Origin": "http://localhost:8080"})
+    assert "x-total-count" in response.headers.get("access-control-expose-headers", "").lower()
+
+
 def test_account_detail_matches_ledger_and_lots(client, sql):
     loy_id = sql("SELECT loy_id FROM loyalty_account WHERE tier_id = 'TIER-GOLD' ORDER BY loy_id LIMIT 1")[0]["loy_id"]
     detail = client.get(f"/accounts/{loy_id}").json()
