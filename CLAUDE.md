@@ -145,4 +145,5 @@ CHECKPOINT: by ~17:00 the DB is loaded and at least the read API works. If behin
 ## Current status
 - Step 0 done: layout, .gitignore, .env.example, docker-compose (db only, host port 5433 because a local Postgres uses 5432), core/config.py, generator/config.py, core/ids.py + tests. Local venv uses the installed python3 (3.14); backend image will be python:3.12-slim.
 - Step 1 done: db/schema.sql (13 tables + eval.ground_truth, structural constraints only; business rules left to validation), lot_status(as_of date DEFAULT '2026-12-31') SQL function, db/tests/smoke_test.sql (rolled-back, passing), docs/erd.md, docs/business_rules.md. Added RET/TCH IDs. Compose mounts only db/schema.sql into initdb (recreate volume with `docker compose down -v` after schema changes, or re-run schema.sql, which is re-runnable).
-- Next: Step 2 (core rule functions).
+- Step 2 done: core/rules.py (eligible_net, points_for, lot_dates, reversal_points with cumulative partial returns and proportional discount split, fifo_consume + InsufficientPoints, lots_to_expire, tier_for), tests/test_rules.py. 72 tests passing. Floats rejected for money/rates.
+- Next: Step 3 (generator, starter scale).
