@@ -4,11 +4,14 @@ from datetime import date
 from fastapi import APIRouter, Query
 
 from backend.app.db import transaction
+from backend.app.detector import detect, score
+from backend.app.evaluate import snapshot
 from backend.app.errors import not_found
 from backend.app.models import (
-    AccountDetail, AccountSummary, Health, LedgerEntry, LotOut, RewardOut, RuleOut, TierOut,
+    AccountDetail, AccountSummary, AnomalyReport, Health, LedgerEntry, LotOut, RewardOut, RuleOut, TierOut, ValidationSummary,
 )
 from backend.app.queries import qualifying_spend
+from backend.app.validation import run_validation
 from core.config import AS_OF_DATE
 
 router = APIRouter()
@@ -98,3 +101,19 @@ def get_rules():
 def get_rewards():
     with transaction() as conn:
         return conn.execute("SELECT * FROM reward ORDER BY points_cost, reward_id").fetchall()
+
+
+@router.get("/validation", response_model=ValidationSummary, tags=["evaluation"])
+def get_validation():
+    """All validation checks, run as SQL against the current database."""
+    with transaction() as conn:
+        snapshot(conn)
+        return run_validation(conn)
+
+
+@router.get("/anomalies", response_model=AnomalyReport, tags=["evaluation"])
+def get_anomalies():
+    """Ground truth, detector results and precision/recall/F1 per issue type."""
+    with transaction() as conn:
+        snapshot(conn)
+        return score(conn, detect(conn))

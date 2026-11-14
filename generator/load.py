@@ -54,6 +54,7 @@ def load(out_dir: Path, url: str | None = None) -> dict[str, int]:
             for table in list(manifest["table_rows"]) + ["eval.ground_truth"]:
                 cur.execute(f"SELECT count(*) FROM {table}")
                 counts[table] = cur.fetchone()[0]
+            cur.execute("ANALYZE")      # fresh planner statistics, so queries get good plans right away
     expected = dict(manifest["table_rows"], **{"eval.ground_truth": sum(manifest["anomalies"].values())})
     if counts != expected:
         raise SystemExit(f"row counts differ after load: {counts} vs {expected}")

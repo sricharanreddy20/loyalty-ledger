@@ -188,6 +188,7 @@ CREATE INDEX pt_account_time   ON points_transaction (loy_id, txn_ts);
 CREATE INDEX pt_reverses       ON points_transaction (reverses_pts_id);
 CREATE INDEX pt_expires        ON points_transaction (expires_pts_id);
 CREATE INDEX pt_redemption     ON points_transaction (rdm_id);
+CREATE INDEX pt_return         ON points_transaction (return_id);
 CREATE INDEX orders_account    ON orders (loy_id, order_ts);
 CREATE INDEX line_order        ON order_line (ord_id);
 CREATE INDEX return_line       ON line_return (line_id);

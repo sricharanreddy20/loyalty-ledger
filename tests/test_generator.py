@@ -215,32 +215,34 @@ def test_every_due_lot_with_points_was_expired(ds):
 
 # ------------------------------------------------------------ tiers
 
-def _daily_qualifying_spend(ds):
-    """Per account: {day: change in qualifying spend}, recomputed from orders and returns."""
+def _qualifying_spend_events(ds):
+    """Per account: [(timestamp, kind, change in qualifying spend)], recomputed from orders and returns.
+    kind 0 = order, 1 = return, so an order sorts before a return at the same timestamp."""
     lines = {l["line_id"]: l for l in ds.order_line}
     order = {o["ord_id"]: o for o in ds.orders}
-    change = defaultdict(lambda: defaultdict(lambda: 0))
+    events = defaultdict(list)
     for l in ds.order_line:
         o = order[l["ord_id"]]
-        change[o["loy_id"]][o["order_ts"].date()] += eligible_net(l["unit_price"], l["qty"], l["discount"], l["category"])
+        events[o["loy_id"]].append((o["order_ts"], 0, eligible_net(l["unit_price"], l["qty"], l["discount"], l["category"])))
     returned = Counter()
-    for r in sorted(ds.line_return, key=lambda r: r["return_id"]):
+    for r in sorted(ds.line_return, key=lambda r: (r["return_ts"], r["return_id"])):
         l = lines[r["line_id"]]
         o = order[l["ord_id"]]
         eligible = eligible_net(l["unit_price"], l["qty"], l["discount"], l["category"])
         before = remaining_eligible_net(eligible, l["qty"], returned[r["line_id"]])
         returned[r["line_id"]] += r["qty_returned"]
         after = remaining_eligible_net(eligible, l["qty"], returned[r["line_id"]])
-        change[o["loy_id"]][r["return_ts"].date()] -= before - after
-    return change
+        events[o["loy_id"]].append((r["return_ts"], 1, -(before - after)))
+    return events
 
 
 def test_final_tier_follows_peak_qualifying_spend(ds):
-    change = _daily_qualifying_spend(ds)
+    """Tiers are checked right after each order, so the peak is taken event by event, not per day."""
+    events = _qualifying_spend_events(ds)
     for account in ds.loyalty_account:
         running, peak = 0, 0
-        for day in sorted(change[account["loy_id"]]):
-            running += change[account["loy_id"]][day]
+        for _, _, delta in sorted(events[account["loy_id"]], key=lambda e: e[:2]):
+            running += delta
             peak = max(peak, running)
         assert account["tier_id"] == ids.tier_id(tier_for(peak).code), account["loy_id"]
 

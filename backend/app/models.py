@@ -187,3 +187,70 @@ class ExpiryResult(BaseModel):
 class Health(BaseModel):
     status: str
     database: str
+
+
+# ---------------------------------------------------------------- evaluation
+
+class ValidationTotals(BaseModel):
+    checks: int
+    PASS: int
+    EXPECTED_FAIL: int
+    FAIL: int
+
+
+class ValidationCheck(BaseModel):
+    id: str
+    category: str
+    description: str
+    status: Literal["PASS", "EXPECTED_FAIL", "FAIL"]
+    violations: int
+    explained: int
+    unexplained: int
+    explained_by: list[str]
+    ground_truth_count: int | None
+    sample: list[str]
+
+
+class ValidationSummary(BaseModel):
+    totals: ValidationTotals
+    checks: list[ValidationCheck]
+
+
+class Metrics(BaseModel):
+    ground_truth: int
+    flagged: int
+    tp: int
+    fp: int
+    fn: int
+    precision: float | None
+    recall: float | None
+    f1: float | None
+
+
+class TypeMetrics(Metrics):
+    issue_type: str
+
+
+class Flagged(BaseModel):
+    issue_type: str
+    record_id: str
+    loy_id: str
+    reason: str
+
+
+class GroundTruth(BaseModel):
+    record_id: str
+    entity: str
+    issue_type: str
+    description: str
+    rule_violated: str
+
+
+class AnomalyReport(BaseModel):
+    detector: str
+    metrics: list[TypeMetrics]
+    overall: Metrics
+    false_positives: list[Flagged]
+    false_negatives: list[GroundTruth]
+    flagged: list[Flagged]
+    ground_truth: list[GroundTruth]

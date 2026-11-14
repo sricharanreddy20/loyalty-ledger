@@ -29,16 +29,16 @@ PTS-2026-00015124,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00001461 expired
 PTS-2026-00015125,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00002254 expired again in EXP-2026-000012 (already expired in EXP-2026-000011),A lot is expired at most once; re-running expiry adds nothing
 PTS-2026-00015126,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00002056 expired again in EXP-2026-000012 (already expired in EXP-2026-000011),A lot is expired at most once; re-running expiry adds nothing
 PTS-2026-00015127,points_transaction,DOUBLE_EXPIRY,Lot PTS-2026-00000556 expired again in EXP-2026-000009 (already expired in EXP-2026-000008),A lot is expired at most once; re-running expiry adds nothing
-TCH-2026-000495,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000784 moved TIER-SILVER -> TIER-GOLD using gross spend 84950.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
-TCH-2026-000496,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000574 moved TIER-GOLD -> TIER-PLATINUM using gross spend 235027.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
-TCH-2026-000497,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000834 moved TIER-BRONZE -> TIER-SILVER using gross spend 28777.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
-TCH-2026-000498,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000570 moved TIER-SILVER -> TIER-GOLD using gross spend 79108.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
-TCH-2026-000499,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000472 moved TIER-SILVER -> TIER-GOLD using gross spend 103729.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
-TCH-2026-000500,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000271 moved TIER-SILVER -> TIER-GOLD using gross spend 103152.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
-TCH-2026-000501,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000222 moved TIER-BRONZE -> TIER-SILVER using gross spend 29429.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
-TCH-2026-000502,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000372 moved TIER-BRONZE -> TIER-SILVER using gross spend 25225.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
-TCH-2026-000503,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000766 moved TIER-SILVER -> TIER-GOLD using gross spend 77532.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
-TCH-2026-000504,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000884 moved TIER-GOLD -> TIER-PLATINUM using gross spend 235027.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000496,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000784 moved TIER-SILVER -> TIER-GOLD using gross spend 84950.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000497,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000574 moved TIER-GOLD -> TIER-PLATINUM using gross spend 235027.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000498,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000834 moved TIER-BRONZE -> TIER-SILVER using gross spend 28777.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000499,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000570 moved TIER-SILVER -> TIER-GOLD using gross spend 79108.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000500,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000472 moved TIER-SILVER -> TIER-GOLD using gross spend 103729.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000501,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000271 moved TIER-SILVER -> TIER-GOLD using gross spend 103152.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000502,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000222 moved TIER-BRONZE -> TIER-SILVER using gross spend 29429.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000503,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000372 moved TIER-BRONZE -> TIER-SILVER using gross spend 25225.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000504,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000766 moved TIER-SILVER -> TIER-GOLD using gross spend 77532.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
+TCH-2026-000505,tier_change,TIER_USES_GROSS_SPEND,LOY-CUST-000884 moved TIER-GOLD -> TIER-PLATINUM using gross spend 235027.00,"Tier follows qualifying spend (eligible net minus returns), not gross spend"
 LOY-CUST-000159,loyalty_account,BALANCE_MISMATCH,current_balance 342 but ledger sum is 0,Account balance equals the sum of its ledger entries
 LOY-CUST-000927,loyalty_account,BALANCE_MISMATCH,current_balance 575 but ledger sum is 189,Account balance equals the sum of its ledger entries
 LOY-CUST-000210,loyalty_account,BALANCE_MISMATCH,current_balance 365 but ledger sum is 16,Account balance equals the sum of its ledger entries

@@ -1,14 +1,14 @@
 {
   "seed": 20261022,
   "scale": "starter",
-  "dataset_fingerprint": "569aeea1e3c64da2b0902ebc4f5dd9edad96891a67791fb7b92efe89c1734463",
+  "dataset_fingerprint": "5368ac075beff22591f0ad9280452a938c5d6750971c077107ddf4a07d00f2c8",
   "table_rows": {
     "tier": 4,
     "rule": 9,
     "reward": 10,
     "customer": 1000,
     "loyalty_account": 1000,
-    "tier_change": 504,
+    "tier_change": 505,
     "expiry_batch": 12,
     "orders": 5000,
     "order_line": 12575,
@@ -99,21 +99,21 @@
     },
     {
       "path": "csv/tier_change.csv",
-      "rows": 504,
-      "bytes": 38194,
-      "sha256": "6d6571c05b6fe173efa97c1ac416730b1922db35ef21ee4c17c5d9f7158fcd67"
+      "rows": 505,
+      "bytes": 38268,
+      "sha256": "669c665676d900f43bb10ecb750db9377d4192755a342b51b386f325663183cd"
     },
     {
       "path": "ground_truth.csv",
       "rows": 50,
       "bytes": 9099,
-      "sha256": "edf50d7ce139a65f6f44a97cef1b258190653cf1afa2fba045029f6e451e54a7"
+      "sha256": "2a5f7ca208bde196e4c72530e49ffa24da0be283dd439266bdb8e4f4b40cea8d"
     },
     {
       "path": "ground_truth.json",
       "rows": 50,
       "bytes": 13328,
-      "sha256": "904c51dfaddb8b93b137ef44cd7e2f9e7476d422aa797db7ac22ba3b6e9498ab"
+      "sha256": "15b4fcd70694ec7a02ffbae2870e5cd8fce198a0a5896ffe2bd410929d581092"
     },
     {
       "path": "json/customer.json",
@@ -189,15 +189,15 @@
     },
     {
       "path": "json/tier_change.json",
-      "rows": 504,
-      "bytes": 101613,
-      "sha256": "f4ca0306caef6da7df3d495fe9fd53632a3e1648ede5389dcacda7a6984d4d87"
+      "rows": 505,
+      "bytes": 101813,
+      "sha256": "f86a4f82bbc2f7f240cfbd58cf6aa57fa5f3d2b8c9afe737eef4085499541840"
     },
     {
       "path": "sql/seed.sql",
-      "rows": 39759,
-      "bytes": 4654058,
-      "sha256": "0ac1a0a5d8cecda2cc14b6080e94e0c252027299488b3007ed918c25035c8898"
+      "rows": 39760,
+      "bytes": 4654150,
+      "sha256": "08b8d7e1848ddef8ba4c47b930b444a696047677ecac0534d01ed14e53b00a85"
     }
   ]
 }

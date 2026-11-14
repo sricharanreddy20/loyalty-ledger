@@ -1,0 +1,726 @@
+{
+  "detector": "rule-based SQL over input tables (no ground truth, no id gaps)",
+  "metrics": [
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "ground_truth": 10,
+      "flagged": 10,
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "ground_truth": 10,
+      "flagged": 10,
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "ground_truth": 10,
+      "flagged": 10,
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "ground_truth": 10,
+      "flagged": 10,
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "ground_truth": 10,
+      "flagged": 10,
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  ],
+  "overall": {
+    "ground_truth": 50,
+    "flagged": 50,
+    "tp": 50,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "false_positives": [],
+  "false_negatives": [],
+  "flagged": [
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000159",
+      "loy_id": "LOY-CUST-000159",
+      "reason": "current_balance 342 but ledger sum is 0"
+    },
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000202",
+      "loy_id": "LOY-CUST-000202",
+      "reason": "current_balance 91 but ledger sum is 72"
+    },
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000210",
+      "loy_id": "LOY-CUST-000210",
+      "reason": "current_balance 365 but ledger sum is 16"
+    },
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000412",
+      "loy_id": "LOY-CUST-000412",
+      "reason": "current_balance 135 but ledger sum is 513"
+    },
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000488",
+      "loy_id": "LOY-CUST-000488",
+      "reason": "current_balance -45 but ledger sum is 166"
+    },
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000495",
+      "loy_id": "LOY-CUST-000495",
+      "reason": "current_balance 123 but ledger sum is 406"
+    },
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000549",
+      "loy_id": "LOY-CUST-000549",
+      "reason": "current_balance -400 but ledger sum is 0"
+    },
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000690",
+      "loy_id": "LOY-CUST-000690",
+      "reason": "current_balance -59 but ledger sum is 207"
+    },
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000814",
+      "loy_id": "LOY-CUST-000814",
+      "reason": "current_balance 151 but ledger sum is 0"
+    },
+    {
+      "issue_type": "BALANCE_MISMATCH",
+      "record_id": "LOY-CUST-000927",
+      "loy_id": "LOY-CUST-000927",
+      "reason": "current_balance 575 but ledger sum is 189"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000188",
+      "loy_id": "LOY-CUST-000004",
+      "reason": "approved 1000 points with only 0 available"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000347",
+      "loy_id": "LOY-CUST-000599",
+      "reason": "approved 750 points with only 88 available"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000364",
+      "loy_id": "LOY-CUST-000726",
+      "reason": "approved 100 points with only 0 available"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000382",
+      "loy_id": "LOY-CUST-000154",
+      "reason": "approved 500 points with only 69 available"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000415",
+      "loy_id": "LOY-CUST-000517",
+      "reason": "approved 1000 points with only 0 available"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000421",
+      "loy_id": "LOY-CUST-000374",
+      "reason": "approved 4000 points with only 83 available"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000493",
+      "loy_id": "LOY-CUST-000861",
+      "reason": "approved 5000 points with only 23 available"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000532",
+      "loy_id": "LOY-CUST-000846",
+      "reason": "approved 1500 points with only 36 available"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000592",
+      "loy_id": "LOY-CUST-000164",
+      "reason": "approved 3000 points with only 19 available"
+    },
+    {
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "record_id": "RDM-2026-000614",
+      "loy_id": "LOY-CUST-000130",
+      "reason": "approved 5000 points with only 14 available"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000283",
+      "loy_id": "LOY-CUST-000852",
+      "reason": "should reverse 15 points, reversed 0"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000300",
+      "loy_id": "LOY-CUST-000385",
+      "reason": "should reverse 4 points, reversed 0"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000357",
+      "loy_id": "LOY-CUST-000634",
+      "reason": "should reverse 16 points, reversed 0"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000413",
+      "loy_id": "LOY-CUST-000229",
+      "reason": "should reverse 4 points, reversed 0"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000441",
+      "loy_id": "LOY-CUST-000317",
+      "reason": "should reverse 23 points, reversed 0"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000505",
+      "loy_id": "LOY-CUST-000940",
+      "reason": "should reverse 6 points, reversed 0"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000569",
+      "loy_id": "LOY-CUST-000194",
+      "reason": "should reverse 46 points, reversed 0"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000653",
+      "loy_id": "LOY-CUST-000649",
+      "reason": "should reverse 26 points, reversed 0"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000678",
+      "loy_id": "LOY-CUST-000381",
+      "reason": "should reverse 4 points, reversed 0"
+    },
+    {
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "record_id": "RET-2026-000689",
+      "loy_id": "LOY-CUST-000268",
+      "reason": "should reverse 3 points, reversed 0"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015118",
+      "loy_id": "LOY-CUST-000851",
+      "reason": "lot PTS-2026-00002255 expired again in EXP-2026-000012 (first expired in EXP-2026-000011)"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015119",
+      "loy_id": "LOY-CUST-000519",
+      "reason": "lot PTS-2026-00001211 expired again in EXP-2026-000010 (first expired in EXP-2026-000009)"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015120",
+      "loy_id": "LOY-CUST-000235",
+      "reason": "lot PTS-2026-00001758 expired again in EXP-2026-000011 (first expired in EXP-2026-000010)"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015121",
+      "loy_id": "LOY-CUST-000869",
+      "reason": "lot PTS-2026-00000442 expired again in EXP-2026-000009 (first expired in EXP-2026-000008)"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015122",
+      "loy_id": "LOY-CUST-000281",
+      "reason": "lot PTS-2026-00001438 expired again in EXP-2026-000010 (first expired in EXP-2026-000009)"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015123",
+      "loy_id": "LOY-CUST-000148",
+      "reason": "lot PTS-2026-00001689 expired again in EXP-2026-000011 (first expired in EXP-2026-000010)"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015124",
+      "loy_id": "LOY-CUST-000224",
+      "reason": "lot PTS-2026-00001461 expired again in EXP-2026-000011 (first expired in EXP-2026-000010)"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015125",
+      "loy_id": "LOY-CUST-000131",
+      "reason": "lot PTS-2026-00002254 expired again in EXP-2026-000012 (first expired in EXP-2026-000011)"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015126",
+      "loy_id": "LOY-CUST-000961",
+      "reason": "lot PTS-2026-00002056 expired again in EXP-2026-000012 (first expired in EXP-2026-000011)"
+    },
+    {
+      "issue_type": "DOUBLE_EXPIRY",
+      "record_id": "PTS-2026-00015127",
+      "loy_id": "LOY-CUST-000090",
+      "reason": "lot PTS-2026-00000556 expired again in EXP-2026-000009 (first expired in EXP-2026-000008)"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000496",
+      "loy_id": "LOY-CUST-000784",
+      "reason": "TIER-GOLD needs 75000.00; qualifying spend peaked at 70562.00, gross spend was 84950.00"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000497",
+      "loy_id": "LOY-CUST-000574",
+      "reason": "TIER-PLATINUM needs 200000.00; qualifying spend peaked at 191721.00, gross spend was 235027.00"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000498",
+      "loy_id": "LOY-CUST-000834",
+      "reason": "TIER-SILVER needs 25000.00; qualifying spend peaked at 19958.00, gross spend was 28777.00"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000499",
+      "loy_id": "LOY-CUST-000570",
+      "reason": "TIER-GOLD needs 75000.00; qualifying spend peaked at 66490.00, gross spend was 79108.00"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000500",
+      "loy_id": "LOY-CUST-000472",
+      "reason": "TIER-GOLD needs 75000.00; qualifying spend peaked at 71820.00, gross spend was 103729.00"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000501",
+      "loy_id": "LOY-CUST-000271",
+      "reason": "TIER-GOLD needs 75000.00; qualifying spend peaked at 64101.00, gross spend was 103152.00"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000502",
+      "loy_id": "LOY-CUST-000222",
+      "reason": "TIER-SILVER needs 25000.00; qualifying spend peaked at 15096.00, gross spend was 29429.00"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000503",
+      "loy_id": "LOY-CUST-000372",
+      "reason": "TIER-SILVER needs 25000.00; qualifying spend peaked at 23554.00, gross spend was 25225.00"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000504",
+      "loy_id": "LOY-CUST-000766",
+      "reason": "TIER-GOLD needs 75000.00; qualifying spend peaked at 69900.00, gross spend was 77532.00"
+    },
+    {
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "record_id": "TCH-2026-000505",
+      "loy_id": "LOY-CUST-000884",
+      "reason": "TIER-PLATINUM needs 200000.00; qualifying spend peaked at 172968.00, gross spend was 235027.00"
+    }
+  ],
+  "ground_truth": [
+    {
+      "record_id": "LOY-CUST-000159",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance 342 but ledger sum is 0",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "LOY-CUST-000202",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance 91 but ledger sum is 72",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "LOY-CUST-000210",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance 365 but ledger sum is 16",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "LOY-CUST-000412",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance 135 but ledger sum is 513",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "LOY-CUST-000488",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance -45 but ledger sum is 166",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "LOY-CUST-000495",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance 123 but ledger sum is 406",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "LOY-CUST-000549",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance -400 but ledger sum is 0",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "LOY-CUST-000690",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance -59 but ledger sum is 207",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "LOY-CUST-000814",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance 151 but ledger sum is 0",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "LOY-CUST-000927",
+      "entity": "loyalty_account",
+      "issue_type": "BALANCE_MISMATCH",
+      "description": "current_balance 575 but ledger sum is 189",
+      "rule_violated": "Account balance equals the sum of its ledger entries"
+    },
+    {
+      "record_id": "PTS-2026-00015118",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00002255 expired again in EXP-2026-000012 (already expired in EXP-2026-000011)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "PTS-2026-00015119",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00001211 expired again in EXP-2026-000010 (already expired in EXP-2026-000009)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "PTS-2026-00015120",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00001758 expired again in EXP-2026-000011 (already expired in EXP-2026-000010)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "PTS-2026-00015121",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00000442 expired again in EXP-2026-000009 (already expired in EXP-2026-000008)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "PTS-2026-00015122",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00001438 expired again in EXP-2026-000010 (already expired in EXP-2026-000009)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "PTS-2026-00015123",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00001689 expired again in EXP-2026-000011 (already expired in EXP-2026-000010)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "PTS-2026-00015124",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00001461 expired again in EXP-2026-000011 (already expired in EXP-2026-000010)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "PTS-2026-00015125",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00002254 expired again in EXP-2026-000012 (already expired in EXP-2026-000011)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "PTS-2026-00015126",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00002056 expired again in EXP-2026-000012 (already expired in EXP-2026-000011)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "PTS-2026-00015127",
+      "entity": "points_transaction",
+      "issue_type": "DOUBLE_EXPIRY",
+      "description": "Lot PTS-2026-00000556 expired again in EXP-2026-000009 (already expired in EXP-2026-000008)",
+      "rule_violated": "A lot is expired at most once; re-running expiry adds nothing"
+    },
+    {
+      "record_id": "RDM-2026-000188",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 1000 points when only 0 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RDM-2026-000347",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 750 points when only 88 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RDM-2026-000364",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 100 points when only 0 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RDM-2026-000382",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 500 points when only 69 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RDM-2026-000415",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 1000 points when only 0 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RDM-2026-000421",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 4000 points when only 83 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RDM-2026-000493",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 5000 points when only 23 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RDM-2026-000532",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 1500 points when only 36 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RDM-2026-000592",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 3000 points when only 19 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RDM-2026-000614",
+      "entity": "redemption",
+      "issue_type": "REDEMPTION_EXCEEDS_BALANCE",
+      "description": "Approved 5000 points when only 14 were available",
+      "rule_violated": "A redemption is approved only if points_cost <= available balance"
+    },
+    {
+      "record_id": "RET-2026-000283",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 1 unit(s) on ORD-2026-001334-03 has no reversal; 15 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "RET-2026-000300",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 2 unit(s) on ORD-2026-001328-01 has no reversal; 4 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "RET-2026-000357",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 1 unit(s) on ORD-2026-001730-03 has no reversal; 16 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "RET-2026-000413",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 1 unit(s) on ORD-2026-001915-02 has no reversal; 4 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "RET-2026-000441",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 1 unit(s) on ORD-2026-001983-01 has no reversal; 23 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "RET-2026-000505",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 1 unit(s) on ORD-2026-002485-01 has no reversal; 6 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "RET-2026-000569",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 4 unit(s) on ORD-2026-003053-04 has no reversal; 46 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "RET-2026-000653",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 2 unit(s) on ORD-2026-003242-04 has no reversal; 26 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "RET-2026-000678",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 1 unit(s) on ORD-2026-003382-03 has no reversal; 4 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "RET-2026-000689",
+      "entity": "line_return",
+      "issue_type": "RETURN_KEEPS_POINTS",
+      "description": "Return of 1 unit(s) on ORD-2026-003489-01 has no reversal; 3 points kept",
+      "rule_violated": "Every return reverses the points earned on the returned amount"
+    },
+    {
+      "record_id": "TCH-2026-000496",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000784 moved TIER-SILVER -> TIER-GOLD using gross spend 84950.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    },
+    {
+      "record_id": "TCH-2026-000497",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000574 moved TIER-GOLD -> TIER-PLATINUM using gross spend 235027.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    },
+    {
+      "record_id": "TCH-2026-000498",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000834 moved TIER-BRONZE -> TIER-SILVER using gross spend 28777.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    },
+    {
+      "record_id": "TCH-2026-000499",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000570 moved TIER-SILVER -> TIER-GOLD using gross spend 79108.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    },
+    {
+      "record_id": "TCH-2026-000500",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000472 moved TIER-SILVER -> TIER-GOLD using gross spend 103729.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    },
+    {
+      "record_id": "TCH-2026-000501",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000271 moved TIER-SILVER -> TIER-GOLD using gross spend 103152.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    },
+    {
+      "record_id": "TCH-2026-000502",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000222 moved TIER-BRONZE -> TIER-SILVER using gross spend 29429.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    },
+    {
+      "record_id": "TCH-2026-000503",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000372 moved TIER-BRONZE -> TIER-SILVER using gross spend 25225.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    },
+    {
+      "record_id": "TCH-2026-000504",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000766 moved TIER-SILVER -> TIER-GOLD using gross spend 77532.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    },
+    {
+      "record_id": "TCH-2026-000505",
+      "entity": "tier_change",
+      "issue_type": "TIER_USES_GROSS_SPEND",
+      "description": "LOY-CUST-000884 moved TIER-GOLD -> TIER-PLATINUM using gross spend 235027.00",
+      "rule_violated": "Tier follows qualifying spend (eligible net minus returns), not gross spend"
+    }
+  ]
+}

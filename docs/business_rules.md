@@ -42,8 +42,10 @@ The configurable values are in [`core/config.py`](../core/config.py) and are loa
 
 **Tier progression.**
 - Qualifying spend = eligible net spend − returned eligible net. Gross spend is not used.
-- Crossing a threshold (checked at the end of each day, after that day's returns) writes a `tier_change` record. The new rate applies from the next day. An upgrade earned on 31 Dec is recorded with an effective date of 1 Jan 2027.
+- The tier check runs right after each order, in the generator and the API alike. If qualifying spend has crossed a threshold, a `tier_change` record is written. The new rate applies from the next day, so an order never earns at a tier reached that same day. An upgrade earned on 31 Dec is recorded with an effective date of 1 Jan 2027.
+- If one day's orders cross two thresholds, two changes are written with the same effective date (for example Bronze→Silver, then Silver→Gold).
 - There are no downgrades in 2026.
+- **Known limitation:** an upgrade earned by an order is kept even if that order is later returned, including on the same day. Qualifying spend goes down, but the tier does not. Validation and the detector accept a tier change when spend crossed the threshold at any moment before it took effect.
 
 **Ledger.**
 - Entries are only ever added, never changed.
@@ -54,7 +56,7 @@ The configurable values are in [`core/config.py`](../core/config.py) and are loa
 - Every write runs in one transaction and first locks the account row (`SELECT … FOR UPDATE`), so writes for one account happen one at a time. Two simultaneous redemptions cannot both pass the balance check.
 - New IDs come from PostgreSQL sequences (`nextval` is atomic). A rolled-back request can leave a gap; IDs are never reused.
 - Write timestamps must not rewrite history. They must be on or after both the latest expiry batch date and the account's latest event, and no later than 31 Dec 2026 23:59:59.
-- **Tier check timing.** The API checks for a tier upgrade right after each order. The generator checks at the end of each day, after that day's returns. Both write the upgrade effective from the next day, so the outcome is the same: an order never earns at a tier reached that same day.
+- **Tier check timing.** The API checks for a tier upgrade right after each order, exactly as the generator does (see Tier progression).
 - **Expiry run dates.** Accepted run dates are the 1st of any 2026 month (an existing date returns `already_run` and changes nothing) or 2027-01-01. The 2027-01-01 batch still gets an ID with the 2026 prefix (`EXP-2026-000013`): the year in IDs identifies the program year of the dataset, not the run date. After that batch, the 2026 write window is closed.
 
 **Where each rule is enforced.** Database constraints enforce only structure: keys, references, allowed values, signs and ID formats. Business rules are checked by validation SQL (Step 6), so labelled anomalies can still be loaded.

@@ -60,7 +60,7 @@ def create_order(order: OrderIn):
             results.append({"line_id": line_id, "eligible_net": eligible, "points": points, "pts_id": pts_id})
         add_to_balance(conn, order.loy_id, total)
 
-        # Tier check right after the order (the generator checks at end of day; same outcome).
+        # Tier check right after the order, as the generator does; the upgrade applies from tomorrow.
         spend = qualifying_spend(conn, order.loy_id)
         current = TIER_BY_ID[account["tier_id"]]
         target = tier_for(spend)

@@ -3,8 +3,8 @@
 Each day, in this order:
   1. expiry batch (1st of the month, 00:05)
   2. tier upgrades effective today
-  3. events by (timestamp, kind: order < return < redemption, id)
-  4. end of day: write a tier change (effective tomorrow) for accounts whose qualifying spend crossed a threshold
+  3. events by (timestamp, kind: order < return < redemption, id); right after each order, a tier change
+     (effective tomorrow) is written if qualifying spend crossed a threshold, as the API does
 Every amount and point value comes from core/rules.py.
 """
 from collections import defaultdict
@@ -87,11 +87,8 @@ class Simulation:
             for acct in self.accounts.values():
                 if acct.upgrade_due and acct.upgrade_due[0] == day:
                     acct.tier, acct.upgrade_due = acct.upgrade_due[1], None
-            touched = {}
             for ts, _, _, handler, event in sorted(self.events_by_day.get(day, []), key=lambda e: e[:3]):
-                touched[handler(event)] = True
-            for loy_id in touched:           # dict keeps first-touch order: deterministic
-                self._check_upgrade(self.accounts[loy_id], day)
+                handler(event)
             day += timedelta(days=1)
         self._finish()
 
@@ -142,6 +139,7 @@ class Simulation:
                     raise AssertionError("lots must be created in expiry order")
                 self.all_lots.append(lot)
             self.line_state[line["line_id"]] = LineState(line, eligible, lot)
+        self._check_upgrade(acct, earned_on)
         return acct.loy_id
 
     def _return(self, planned) -> str:
@@ -236,13 +234,15 @@ class Simulation:
             self._ledger(lot.loy_id, "EXPIRY", -points, ts, exp_id=exp_id, expires_pts_id=pts_id)
 
     def _check_upgrade(self, acct: AccountState, day):
+        """Called right after each order. Compares with the latest tier, including one already due tomorrow."""
+        latest = acct.upgrade_due[1] if acct.upgrade_due else acct.tier
         target = tier_for(acct.qualifying_spend)
-        if target.rank <= acct.tier.rank:
+        if target.rank <= latest.rank:
             return                      # no downgrades
         effective = day + timedelta(days=1)
         self.ds.tier_change.append({
             "tier_change_id": ids.tch_id(self.next_tch), "loy_id": acct.loy_id,
-            "old_tier_id": ids.tier_id(acct.tier.code), "new_tier_id": ids.tier_id(target.code),
+            "old_tier_id": ids.tier_id(latest.code), "new_tier_id": ids.tier_id(target.code),
             "effective_date": effective, "qualifying_spend_at_change": acct.qualifying_spend,
         })
         self.next_tch += 1

@@ -1,7 +1,7 @@
-"""CLI: python -m generator --scale starter [--seed N] [--out DIR] [--load] [--check-reproducible]
+"""CLI: python -m generator --scale starter [--seed N] [--out DIR] [--load [--evaluate]] [--check-reproducible]
 
 Builds the baseline, injects labelled anomalies, writes CSV/JSON/SQL + ground truth + manifest.
---load copies the export into PostgreSQL; --check-reproducible rebuilds twice in separate
+--load copies the export into PostgreSQL; --evaluate then runs validation + detector; --check-reproducible rebuilds twice in separate
 processes (different PYTHONHASHSEED) and compares every file's SHA-256.
 """
 import argparse
@@ -87,6 +87,8 @@ def main():
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
     parser.add_argument("--out", type=Path, help="export folder (default output/<scale>)")
     parser.add_argument("--load", action="store_true", help="load the export into PostgreSQL")
+    parser.add_argument("--evaluate", action="store_true",
+                        help="after --load, run validation and the detector and write their reports to the export folder")
     parser.add_argument("--check-reproducible", action="store_true", help="build twice and compare checksums")
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args()
@@ -110,6 +112,16 @@ def main():
         counts = load(out)
         print(f"Loaded into PostgreSQL in {time.perf_counter() - t:.2f}s; row counts match manifest: "
               + ", ".join(f"{k} {v:,}" for k, v in counts.items()))
+
+    if args.evaluate:
+        if not args.load:
+            parser.error("--evaluate needs --load")
+        from backend.app.evaluate import evaluate, print_summary, write
+        t = time.perf_counter()
+        validation, report = evaluate()
+        write(out, validation, report)
+        print(f"Evaluated in {time.perf_counter() - t:.2f}s")
+        print_summary(validation, report)
 
     if args.check_reproducible and not check_reproducible(args.scale, args.seed):
         sys.exit(1)
